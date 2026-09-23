@@ -43,6 +43,7 @@ const generateQuiz = async (req, res, next) => {
       data: quizData,
     });
   } catch (err) {
+    console.error("GEMINI ERROR:", err)
     // Handle known validation errors from our service
     if (err.message && (
       err.message.includes('GEMINI_API_KEY') ||

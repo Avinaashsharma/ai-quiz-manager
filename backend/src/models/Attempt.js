@@ -21,7 +21,7 @@ const attemptSchema = new mongoose.Schema(
         selectedAnswer: {
           type: Number,
           required: true,
-          min: 0,
+          min: -1,
           max: 3,
         },
       },

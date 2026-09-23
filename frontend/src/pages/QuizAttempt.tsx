@@ -28,16 +28,16 @@ const QuizAttempt: React.FC = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(-1); // -1 = not initialized
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  // Initialize timer
+  // Initialize timer once when quiz data is available
   useEffect(() => {
-    if (quiz) {
+    if (quiz && timeLeft < 0) {
       setTimeLeft(quiz.duration * 60);
     }
-  }, [quiz]);
+  }, [quiz, timeLeft]);
 
   // Submit handler
   const handleSubmit = useCallback(async () => {
@@ -81,10 +81,14 @@ const QuizAttempt: React.FC = () => {
     }
   }, [isSubmitting, quiz, answers, id, navigate, joinCode]);
 
-  // Timer countdown
+  // Timer countdown — only runs when timeLeft > 0
   useEffect(() => {
-    if (timeLeft <= 0 && quiz) {
-      handleSubmit();
+    // timeLeft === -1 means not initialized, timeLeft === 0 means expired
+    if (timeLeft <= 0) {
+      // Auto-submit only when timer reaches exactly 0 (was counting down)
+      if (timeLeft === 0 && quiz) {
+        handleSubmit();
+      }
       return;
     }
 
@@ -121,6 +125,7 @@ const QuizAttempt: React.FC = () => {
   const answeredCount = Object.keys(answers).length;
 
   const formatTime = (seconds: number) => {
+    if (seconds < 0) return '--:--';
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;

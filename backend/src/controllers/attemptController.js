@@ -58,7 +58,7 @@ const submitAttempt = async (req, res, next) => {
 
       return {
         questionId: question._id,
-        selectedAnswer: selectedAnswer >= 0 ? selectedAnswer : 0,
+        selectedAnswer: selectedAnswer,
       };
     });
 
