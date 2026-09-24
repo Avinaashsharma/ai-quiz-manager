@@ -15,14 +15,10 @@ const VerifyOtp: React.FC = () => {
 
   const email = (location.state as { email?: string })?.email || '';
 
-  // If no email in state, redirect to register
   useEffect(() => {
-    if (!email) {
-      navigate('/register', { replace: true });
-    }
+    if (!email) navigate('/register', { replace: true });
   }, [email, navigate]);
 
-  // If already logged in, redirect to dashboard
   useEffect(() => {
     if (user) {
       const dest = user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard';
@@ -31,22 +27,15 @@ const VerifyOtp: React.FC = () => {
   }, [user, navigate]);
 
   const handleChange = (index: number, value: string) => {
-    if (!/^\d*$/.test(value)) return; // digits only
-
+    if (!/^\d*$/.test(value)) return;
     const newOtp = [...otp];
     newOtp[index] = value.slice(-1);
     setOtp(newOtp);
-
-    // Auto-focus next input
-    if (value && index < 5) {
-      inputRefs.current[index + 1]?.focus();
-    }
+    if (value && index < 5) inputRefs.current[index + 1]?.focus();
   };
 
   const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    }
+    if (e.key === 'Backspace' && !otp[index] && index > 0) inputRefs.current[index - 1]?.focus();
   };
 
   const handlePaste = (e: React.ClipboardEvent) => {
@@ -61,48 +50,37 @@ const VerifyOtp: React.FC = () => {
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
     const otpString = otp.join('');
-    if (otpString.length !== 6) {
-      setError('Please enter the complete 6-digit code');
-      return;
-    }
+    if (otpString.length !== 6) { setError('Please enter the complete 6-digit code'); return; }
 
     setIsVerifying(true);
     try {
       await verifyOtpFn(email, otpString);
-      // Navigation handled by useEffect after user state updates
     } catch (err: unknown) {
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError('Verification failed. Please try again.');
-      }
+      if (axios.isAxiosError(err) && err.response?.data?.message) setError(err.response.data.message);
+      else setError('Verification failed. Please try again.');
     } finally {
       setIsVerifying(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-indigo-900">
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md shadow-2xl">
+    <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50 px-4">
+      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-sm">
         <div className="text-center mb-6">
-          <div className="text-5xl mb-4">📧</div>
-          <h2 className="text-2xl font-bold text-white mb-2">Verify Your Email</h2>
-          <p className="text-purple-300 text-sm">
-            We&apos;ve sent a 6-digit code to
-          </p>
-          <p className="text-white font-semibold text-sm mt-1">{email}</p>
+          <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-orange-500 text-xl">✉</span>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-1">Verify your email</h2>
+          <p className="text-gray-500 text-sm">We sent a 6-digit code to</p>
+          <p className="text-gray-900 font-medium text-sm mt-1">{email}</p>
         </div>
 
         {error && (
-          <div className="bg-red-500/20 border border-red-500/40 text-red-200 px-4 py-3 rounded-xl mb-6 text-sm text-center">
-            {error}
-          </div>
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm text-center">{error}</div>
         )}
 
         <form onSubmit={handleVerify} className="space-y-6">
-          {/* OTP Input Boxes */}
           <div className="flex justify-center gap-3" onPaste={handlePaste}>
             {otp.map((digit, index) => (
               <input
@@ -114,28 +92,22 @@ const VerifyOtp: React.FC = () => {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-14 text-center text-2xl font-bold rounded-xl bg-white/5 border border-white/20 text-white focus:outline-none focus:border-purple-400 focus:bg-white/10 transition-all"
+                className="w-11 h-13 text-center text-xl font-bold rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
                 autoFocus={index === 0}
               />
             ))}
           </div>
-
           <button
             type="submit"
             disabled={isVerifying}
-            className="w-full py-3 bg-purple-600 hover:bg-purple-500 disabled:bg-purple-600/50 disabled:cursor-not-allowed text-white rounded-xl font-semibold transition-colors duration-200"
+            className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
           >
             {isVerifying ? 'Verifying...' : 'Verify Email'}
           </button>
         </form>
 
-        <p className="text-center text-purple-300 mt-6 text-xs">
-          Code expires in 10 minutes
-        </p>
-
-        <Link to="/register" className="block text-center text-white/50 hover:text-white/80 mt-4 text-sm">
-          ← Back to Register
-        </Link>
+        <p className="text-center text-gray-400 mt-4 text-xs">Code expires in 10 minutes</p>
+        <Link to="/register" className="block text-center text-gray-500 hover:text-gray-700 mt-3 text-sm">← Back to Register</Link>
       </div>
     </div>
   );

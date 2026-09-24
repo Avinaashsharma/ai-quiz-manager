@@ -14,7 +14,6 @@ const Register: React.FC = () => {
   const { register, user } = useAuth();
   const navigate = useNavigate();
 
-  // If already logged in, redirect
   React.useEffect(() => {
     if (user) {
       const dest = user.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard';
@@ -40,7 +39,6 @@ const Register: React.FC = () => {
     try {
       const result = await register(name, email, password, role);
       if (result.requiresVerification) {
-        // Redirect to OTP verification page
         navigate('/verify-otp', { state: { email: result.email } });
       }
     } catch (err: unknown) {
@@ -55,68 +53,76 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-indigo-900">
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-        <h2 className="text-3xl font-bold text-white text-center mb-6">
-          Create Account
-        </h2>
+    <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50 px-4">
+      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-sm">
+        <h2 className="text-2xl font-bold text-gray-900 text-center mb-1">Create account</h2>
+        <p className="text-gray-500 text-sm text-center mb-6">Get started with QuizAI</p>
 
         {error && (
-          <div className="bg-red-500/20 border border-red-500/40 text-red-200 px-4 py-3 rounded-xl mb-6 text-sm text-center">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm text-center">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-purple-400 transition-colors"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-purple-400 transition-colors"
-          />
-          <input
-            type="password"
-            placeholder="Password (min 6 characters)"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-purple-400 transition-colors"
-          />
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            aria-label="Select Role"
-            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-purple-400 transition-colors"
-          >
-            <option value="" disabled className="text-gray-900">Select Role</option>
-            <option value="teacher" className="text-gray-900">Teacher</option>
-            <option value="student" className="text-gray-900">Student</option>
-          </select>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <input
+              type="text"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input
+              type="password"
+              placeholder="Min 6 characters"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              aria-label="Select Role"
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors"
+            >
+              <option value="" disabled>Select your role</option>
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 bg-purple-600 hover:bg-purple-500 disabled:bg-purple-600/50 disabled:cursor-not-allowed text-white rounded-xl font-semibold transition-colors duration-200"
+            className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
           >
-            {isSubmitting ? 'Creating account...' : 'Register'}
+            {isSubmitting ? 'Creating account...' : 'Create Account'}
           </button>
         </form>
 
-        <p className="text-center text-purple-300 mt-6 text-sm">
+        <p className="text-center text-gray-500 mt-6 text-sm">
           Already have an account?{' '}
-          <Link to="/login" className="text-purple-400 hover:text-purple-300 underline">
-            Login
+          <Link to="/login" className="text-orange-600 hover:text-orange-700 font-medium">
+            Sign in
           </Link>
         </p>
-        <Link to="/" className="block text-center text-white/50 hover:text-white/80 mt-4 text-sm">
-          ← Back to Home
-        </Link>
       </div>
     </div>
   );

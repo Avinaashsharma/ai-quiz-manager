@@ -8,33 +8,15 @@ import {
 } from 'recharts';
 
 interface Summary {
-  totalParticipants: number;
-  averageScore: number;
-  highestScore: number;
-  lowestScore: number;
-  averagePercentage: number;
-  totalCorrect: number;
-  totalWrong: number;
+  totalParticipants: number; averageScore: number; highestScore: number; lowestScore: number;
+  averagePercentage: number; totalCorrect: number; totalWrong: number;
 }
-
 interface ScoreBucket { range: string; count: number }
-interface QuestionAcc {
-  questionNumber: number;
-  questionText: string;
-  correctCount: number;
-  wrongCount: number;
-  accuracy: number;
-}
-interface StudentPerf {
-  name: string;
-  score: number;
-  percentage: number;
-  correctAnswers: number;
-  wrongAnswers: number;
-}
+interface QuestionAcc { questionNumber: number; questionText: string; correctCount: number; wrongCount: number; accuracy: number; }
+interface StudentPerf { name: string; score: number; percentage: number; correctAnswers: number; wrongAnswers: number; }
 interface QuizInfo { _id: string; title: string; totalQuestions: number }
 
-const COLORS = ['#8b5cf6', '#6366f1', '#a78bfa', '#818cf8', '#c084fc'];
+const BAR_COLORS = ['#f97316', '#ea580c', '#fb923c', '#fdba74', '#c2410c'];
 const PIE_COLORS = ['#22c55e', '#ef4444'];
 
 const TeacherAnalytics: React.FC = () => {
@@ -52,190 +34,130 @@ const TeacherAnalytics: React.FC = () => {
       try {
         const res = await api.get(`/quizzes/${id}/analytics`);
         const d = res.data.data;
-        setQuiz(d.quiz);
-        setSummary(d.summary);
-        setScoreDistribution(d.scoreDistribution);
-        setQuestionAccuracy(d.questionAccuracy);
-        setStudentPerformance(d.studentPerformance);
+        setQuiz(d.quiz); setSummary(d.summary); setScoreDistribution(d.scoreDistribution);
+        setQuestionAccuracy(d.questionAccuracy); setStudentPerformance(d.studentPerformance);
       } catch (err: unknown) {
-        if (axios.isAxiosError(err) && err.response?.data?.message) {
-          setError(err.response.data.message);
-        } else {
-          setError('Failed to load analytics');
-        }
-      } finally {
-        setIsLoading(false);
-      }
+        if (axios.isAxiosError(err) && err.response?.data?.message) setError(err.response.data.message);
+        else setError('Failed to load analytics');
+      } finally { setIsLoading(false); }
     };
     fetchAnalytics();
   }, [id]);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-indigo-900">
-        <div className="text-white text-xl">Loading analytics...</div>
-      </div>
-    );
-  }
+  if (isLoading) return <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50"><p className="text-gray-400">Loading analytics...</p></div>;
+  if (error) return (
+    <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-gray-50">
+      <p className="text-red-500 text-lg mb-4">{error}</p>
+      <Link to="/teacher/quizzes" className="px-6 py-2.5 bg-orange-500 text-white rounded-lg font-semibold">Back to Quizzes</Link>
+    </div>
+  );
 
-  if (error) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-indigo-900 text-white">
-        <p className="text-red-300 text-xl mb-4">{error}</p>
-        <Link to="/teacher/quizzes" className="px-6 py-3 bg-purple-600 rounded-xl font-semibold">Back to Quizzes</Link>
-      </div>
-    );
-  }
-
-  const pieData = summary
-    ? [
-        { name: 'Correct', value: summary.totalCorrect },
-        { name: 'Wrong', value: summary.totalWrong },
-      ]
-    : [];
-
+  const pieData = summary ? [{ name: 'Correct', value: summary.totalCorrect }, { name: 'Wrong', value: summary.totalWrong }] : [];
   const isEmpty = !summary || summary.totalParticipants === 0;
 
+  const tooltipStyle = { background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, color: '#374151', fontSize: 13 };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-indigo-900 text-white p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold">{quiz?.title}</h1>
-            <p className="text-purple-300 text-sm">Quiz Analytics</p>
+            <h1 className="text-2xl font-bold text-gray-900">{quiz?.title}</h1>
+            <p className="text-gray-500 text-sm">Analytics</p>
           </div>
-          <Link to="/teacher/quizzes" className="text-purple-300 hover:text-white text-sm transition-colors">← Back to Quizzes</Link>
+          <Link to="/teacher/quizzes" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>
         </div>
 
         {isEmpty ? (
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-12 text-center">
-            <div className="text-5xl mb-4">📊</div>
-            <h2 className="text-xl font-semibold mb-2">No Data Yet</h2>
-            <p className="text-purple-300">Analytics will appear once students start submitting their attempts.</p>
+          <div className="bg-white border border-gray-200 rounded-lg p-12 text-center">
+            <p className="text-3xl mb-3">📊</p>
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">No Data Yet</h2>
+            <p className="text-gray-500">Analytics will appear once students start submitting their attempts.</p>
           </div>
         ) : (
           <>
             {/* Summary Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 text-center">
-                <p className="text-3xl font-bold">{summary!.totalParticipants}</p>
-                <p className="text-purple-300 text-sm">Participants</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-gray-900">{summary!.totalParticipants}</p>
+                <p className="text-gray-500 text-xs">Participants</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 text-center">
-                <p className="text-3xl font-bold text-purple-400">{summary!.averagePercentage}%</p>
-                <p className="text-purple-300 text-sm">Avg Score</p>
+              <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-orange-500">{summary!.averagePercentage}%</p>
+                <p className="text-gray-500 text-xs">Avg Score</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 text-center">
-                <p className="text-3xl font-bold text-green-400">{summary!.highestScore}%</p>
-                <p className="text-purple-300 text-sm">Highest</p>
+              <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-green-600">{summary!.highestScore}%</p>
+                <p className="text-gray-500 text-xs">Highest</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 text-center">
-                <p className="text-3xl font-bold text-red-400">{summary!.lowestScore}%</p>
-                <p className="text-purple-300 text-sm">Lowest</p>
+              <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
+                <p className="text-2xl font-bold text-red-500">{summary!.lowestScore}%</p>
+                <p className="text-gray-500 text-xs">Lowest</p>
               </div>
             </div>
 
             {/* Charts Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-              {/* Score Distribution */}
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-                <h3 className="font-semibold mb-4">Score Distribution</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+              <div className="bg-white border border-gray-200 rounded-lg p-6">
+                <h3 className="font-semibold text-gray-900 mb-4 text-sm">Score Distribution</h3>
                 <ResponsiveContainer width="100%" height={260}>
                   <BarChart data={scoreDistribution}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                    <XAxis dataKey="range" tick={{ fill: '#a78bfa', fontSize: 12 }} />
-                    <YAxis tick={{ fill: '#a78bfa', fontSize: 12 }} allowDecimals={false} />
-                    <Tooltip
-                      contentStyle={{ background: '#1e1b4b', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 12, color: '#fff' }}
-                    />
-                    <Bar dataKey="count" radius={[6, 6, 0, 0]}>
-                      {scoreDistribution.map((_, i) => (
-                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
-                      ))}
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                    <XAxis dataKey="range" tick={{ fill: '#6b7280', fontSize: 12 }} />
+                    <YAxis tick={{ fill: '#6b7280', fontSize: 12 }} allowDecimals={false} />
+                    <Tooltip contentStyle={tooltipStyle} />
+                    <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                      {scoreDistribution.map((_, i) => <Cell key={i} fill={BAR_COLORS[i % BAR_COLORS.length]} />)}
                     </Bar>
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-
-              {/* Correct vs Wrong Pie */}
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-                <h3 className="font-semibold mb-4">Overall Correct vs Wrong</h3>
+              <div className="bg-white border border-gray-200 rounded-lg p-6">
+                <h3 className="font-semibold text-gray-900 mb-4 text-sm">Correct vs Wrong</h3>
                 <ResponsiveContainer width="100%" height={260}>
                   <PieChart>
-                    <Pie
-                      data={pieData}
-                      cx="50%" cy="50%"
-                      innerRadius={60} outerRadius={95}
-                      paddingAngle={4}
-                      dataKey="value"
+                    <Pie data={pieData} cx="50%" cy="50%" innerRadius={60} outerRadius={95} paddingAngle={4} dataKey="value"
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      label={({ name, percent }: any) => `${name ?? ''} ${((percent ?? 0) * 100).toFixed(0)}%`}
-                    >
-                      {pieData.map((_, i) => (
-                        <Cell key={i} fill={PIE_COLORS[i]} />
-                      ))}
+                      label={({ name, percent }: any) => `${name ?? ''} ${((percent ?? 0) * 100).toFixed(0)}%`}>
+                      {pieData.map((_, i) => <Cell key={i} fill={PIE_COLORS[i]} />)}
                     </Pie>
-                    <Tooltip
-                      contentStyle={{ background: '#1e1b4b', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 12, color: '#fff' }}
-                    />
-                    <Legend wrapperStyle={{ color: '#a78bfa', fontSize: 13 }} />
+                    <Tooltip contentStyle={tooltipStyle} />
+                    <Legend wrapperStyle={{ fontSize: 13, color: '#6b7280' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             </div>
 
             {/* Question Accuracy */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 mb-8">
-              <h3 className="font-semibold mb-4">Question-wise Accuracy</h3>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 mb-6">
+              <h3 className="font-semibold text-gray-900 mb-4 text-sm">Question-wise Accuracy</h3>
               <ResponsiveContainer width="100%" height={Math.max(200, questionAccuracy.length * 45)}>
                 <BarChart data={questionAccuracy} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis type="number" domain={[0, 100]} tick={{ fill: '#a78bfa', fontSize: 12 }} unit="%" />
-                  <YAxis
-                    type="category"
-                    dataKey="questionNumber"
-                    tick={{ fill: '#a78bfa', fontSize: 12 }}
-                    tickFormatter={(v: number) => `Q${v}`}
-                    width={40}
-                  />
-                  <Tooltip
-                    contentStyle={{ background: '#1e1b4b', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 12, color: '#fff' }}
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                  <XAxis type="number" domain={[0, 100]} tick={{ fill: '#6b7280', fontSize: 12 }} unit="%" />
+                  <YAxis type="category" dataKey="questionNumber" tick={{ fill: '#6b7280', fontSize: 12 }} tickFormatter={(v: number) => `Q${v}`} width={40} />
+                  <Tooltip contentStyle={tooltipStyle}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    formatter={(value: any) => [`${value}%`, 'Accuracy']}
-                  />
-                  <Bar dataKey="accuracy" radius={[0, 6, 6, 0]} fill="#8b5cf6" />
+                    formatter={(value: any) => [`${value}%`, 'Accuracy']} />
+                  <Bar dataKey="accuracy" radius={[0, 4, 4, 0]} fill="#f97316" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
             {/* Student Performance */}
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
-              <h3 className="font-semibold mb-4">Student Performance</h3>
+            <div className="bg-white border border-gray-200 rounded-lg p-6">
+              <h3 className="font-semibold text-gray-900 mb-4 text-sm">Student Performance</h3>
               <ResponsiveContainer width="100%" height={Math.max(250, studentPerformance.length * 45)}>
                 <BarChart data={studentPerformance} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                  <XAxis type="number" domain={[0, 100]} tick={{ fill: '#a78bfa', fontSize: 12 }} unit="%" />
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    tick={{ fill: '#a78bfa', fontSize: 12 }}
-                    width={100}
-                  />
-                  <Tooltip
-                    contentStyle={{ background: '#1e1b4b', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 12, color: '#fff' }}
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                  <XAxis type="number" domain={[0, 100]} tick={{ fill: '#6b7280', fontSize: 12 }} unit="%" />
+                  <YAxis type="category" dataKey="name" tick={{ fill: '#6b7280', fontSize: 12 }} width={100} />
+                  <Tooltip contentStyle={tooltipStyle}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    formatter={(value: any, name: any) => [
-                      `${value}${name === 'percentage' ? '%' : ''}`,
-                      name === 'percentage' ? 'Score' : name,
-                    ]}
-                  />
-                  <Bar dataKey="percentage" radius={[0, 6, 6, 0]}>
+                    formatter={(value: any, name: any) => [`${value}${name === 'percentage' ? '%' : ''}`, name === 'percentage' ? 'Score' : name]} />
+                  <Bar dataKey="percentage" radius={[0, 4, 4, 0]}>
                     {studentPerformance.map((entry, i) => (
-                      <Cell
-                        key={i}
-                        fill={entry.percentage >= 80 ? '#22c55e' : entry.percentage >= 50 ? '#eab308' : '#ef4444'}
-                      />
+                      <Cell key={i} fill={entry.percentage >= 80 ? '#22c55e' : entry.percentage >= 50 ? '#f97316' : '#ef4444'} />
                     ))}
                   </Bar>
                 </BarChart>
