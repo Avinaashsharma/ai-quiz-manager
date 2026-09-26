@@ -29,8 +29,8 @@ const TeacherDashboard: React.FC = () => {
   const draftCount = quizzes.filter((q) => q.status === 'draft').length;
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900">Welcome back, {user?.name}</h1>
@@ -68,7 +68,7 @@ const TeacherDashboard: React.FC = () => {
             {quizzes.length > 0 && (
               <Link
                 to="/teacher/quizzes"
-                className="px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors"
+                className="px-6 py-2.5 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors"
               >
                 View All Quizzes
               </Link>

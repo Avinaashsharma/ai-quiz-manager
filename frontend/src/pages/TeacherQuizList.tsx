@@ -48,8 +48,8 @@ const TeacherQuizList: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">My Quizzes</h1>
@@ -91,7 +91,7 @@ const TeacherQuizList: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2 border-t border-gray-100 pt-3">
-                  <Link to={`/teacher/quizzes/${quiz._id}/edit`} className="flex-1 text-center py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 rounded transition-colors">Edit</Link>
+                  <Link to={`/teacher/quizzes/${quiz._id}/edit`} className="flex-1 text-center py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 bg-orange-50 hover:bg-gray-100 rounded transition-colors">Edit</Link>
                   <Link to={`/teacher/quizzes/${quiz._id}/results`} className="flex-1 text-center py-1.5 text-sm font-medium text-orange-600 hover:text-orange-700 bg-orange-50 hover:bg-orange-100 rounded transition-colors">Results</Link>
                   <Link to={`/teacher/quizzes/${quiz._id}/analytics`} className="flex-1 text-center py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded transition-colors">Analytics</Link>
                   {quiz.status === 'active' && (

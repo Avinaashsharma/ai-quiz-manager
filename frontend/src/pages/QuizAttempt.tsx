@@ -51,7 +51,7 @@ const QuizAttempt: React.FC = () => {
 
   if (!quiz) {
     return (
-      <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-gray-50">
+      <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-orange-50">
         <p className="text-gray-500 text-lg mb-4">No quiz data found.</p>
         <button onClick={() => navigate('/student/join')} className="px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors">Join a Quiz</button>
       </div>
@@ -73,8 +73,8 @@ const QuizAttempt: React.FC = () => {
   const isUrgent = timeLeft >= 0 && timeLeft <= 60;
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -114,7 +114,7 @@ const QuizAttempt: React.FC = () => {
                 className={`w-full text-left px-5 py-3.5 rounded-lg border transition-all ${
                   answers[currentQuestion._id] === oIndex
                     ? 'bg-orange-50 border-orange-400 text-gray-900'
-                    : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300'
+                    : 'bg-white border-gray-200 text-gray-700 hover:bg-orange-50 hover:border-gray-300'
                 }`}>
                 <span className="font-semibold mr-3 text-orange-500">{String.fromCharCode(65 + oIndex)}.</span>
                 {option}
@@ -126,12 +126,12 @@ const QuizAttempt: React.FC = () => {
         {/* Navigation */}
         <div className="flex items-center justify-between">
           <button onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))} disabled={currentIndex === 0}
-            className="px-5 py-2.5 bg-white hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed border border-gray-300 rounded-lg font-medium text-gray-700 transition-colors">
+            className="px-5 py-2.5 bg-white hover:bg-orange-50 disabled:opacity-30 disabled:cursor-not-allowed border border-gray-300 rounded-lg font-medium text-gray-700 transition-colors">
             ← Previous
           </button>
           {currentIndex < totalQuestions - 1 ? (
             <button onClick={() => setCurrentIndex((prev) => Math.min(totalQuestions - 1, prev + 1))}
-              className="px-5 py-2.5 bg-white hover:bg-gray-50 border border-gray-300 rounded-lg font-medium text-gray-700 transition-colors">
+              className="px-5 py-2.5 bg-white hover:bg-orange-50 border border-gray-300 rounded-lg font-medium text-gray-700 transition-colors">
               Next →
             </button>
           ) : (

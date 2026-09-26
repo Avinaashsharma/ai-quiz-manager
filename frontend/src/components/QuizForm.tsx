@@ -176,7 +176,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
         <button
           type="button"
           onClick={addQuestion}
-          className="px-5 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 rounded-lg font-medium transition-colors"
+          className="px-5 py-2.5 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-medium transition-colors"
         >
           + Add Question
         </button>

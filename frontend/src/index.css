@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+@theme {
+  --color-orange-50: #fffcf8;
+}
+
+
+
 /* ======= Design System ======= */
 :root {
-  --orange-50: #fff7ed;
+  --orange-50: #fff4e6;
   --orange-100: #ffedd5;
   --orange-200: #fed7aa;
   --orange-500: #f97316;
@@ -15,7 +21,7 @@
 }
 
 body {
-  background-color: #fafafa;
+  background-color: #fffcf8;
   color: #1a1a1a;
 }
 

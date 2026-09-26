@@ -44,9 +44,9 @@ const TeacherAnalytics: React.FC = () => {
     fetchAnalytics();
   }, [id]);
 
-  if (isLoading) return <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50"><p className="text-gray-400">Loading analytics...</p></div>;
+  if (isLoading) return <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-orange-50"><p className="text-gray-400">Loading analytics...</p></div>;
   if (error) return (
-    <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-gray-50">
+    <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-orange-50">
       <p className="text-red-500 text-lg mb-4">{error}</p>
       <Link to="/teacher/quizzes" className="px-6 py-2.5 bg-orange-500 text-white rounded-lg font-semibold">Back to Quizzes</Link>
     </div>
@@ -58,8 +58,8 @@ const TeacherAnalytics: React.FC = () => {
   const tooltipStyle = { background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, color: '#374151', fontSize: 13 };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{quiz?.title}</h1>

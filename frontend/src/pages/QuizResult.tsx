@@ -45,9 +45,9 @@ const QuizResult: React.FC = () => {
     fetchAttempt();
   }, [id]);
 
-  if (isLoading) return <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50"><p className="text-gray-400">Loading results...</p></div>;
+  if (isLoading) return <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-orange-50"><p className="text-gray-400">Loading results...</p></div>;
   if (error || !attempt) return (
-    <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-gray-50">
+    <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-orange-50">
       <p className="text-red-500 text-lg mb-4">{error || 'Results not found'}</p>
       <Link to="/student/dashboard" className="px-6 py-2.5 bg-orange-500 text-white rounded-lg font-semibold">Back to Dashboard</Link>
     </div>
@@ -56,8 +56,8 @@ const QuizResult: React.FC = () => {
   const scoreColor = attempt.percentage >= 80 ? 'text-green-600' : attempt.percentage >= 50 ? 'text-orange-500' : 'text-red-500';
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Score Card */}
         <div className="bg-white border border-gray-200 rounded-lg p-8 text-center mb-6">
           <h1 className="text-xl font-bold text-gray-900 mb-1">{attempt.quiz.title}</h1>
@@ -72,7 +72,7 @@ const QuizResult: React.FC = () => {
               <p className="text-red-500 text-2xl font-bold">{attempt.wrongAnswers}</p>
               <p className="text-gray-500 text-xs">Wrong</p>
             </div>
-            <div className="bg-gray-50 rounded-lg p-3">
+            <div className="bg-orange-50 rounded-lg p-3">
               <p className="text-gray-700 text-2xl font-bold">{attempt.totalQuestions}</p>
               <p className="text-gray-500 text-xs">Total</p>
             </div>
@@ -99,7 +99,7 @@ const QuizResult: React.FC = () => {
                 </div>
                 <div className="space-y-2 ml-10">
                   {q.options.map((opt, oIndex) => {
-                    let style = 'bg-gray-50 border-gray-200 text-gray-600';
+                    let style = 'bg-orange-50 border-gray-200 text-gray-600';
                     if (oIndex === q.correctAnswer) style = 'bg-green-50 border-green-200 text-green-700';
                     else if (oIndex === selected && oIndex !== q.correctAnswer) style = 'bg-red-50 border-red-200 text-red-700';
                     return (

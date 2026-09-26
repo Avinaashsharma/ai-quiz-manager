@@ -33,8 +33,8 @@ const TeacherLiveQuiz: React.FC = () => {
   const handleStartQuiz = () => { const socket = connectSocket(); socket.emit('teacher:start-quiz', { joinCode }); };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Live Quiz Room</h1>
@@ -88,7 +88,7 @@ const TeacherLiveQuiz: React.FC = () => {
           ) : (
             <div className="flex flex-wrap gap-2">
               {participants.map((p) => (
-                <span key={p.userId} className="bg-gray-50 border border-gray-200 px-3 py-1 rounded text-sm text-gray-700">{p.name}</span>
+                <span key={p.userId} className="bg-orange-50 border border-gray-200 px-3 py-1 rounded text-sm text-gray-700">{p.name}</span>
               ))}
             </div>
           )}

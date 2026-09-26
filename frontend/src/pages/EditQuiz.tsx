@@ -55,15 +55,15 @@ const EditQuiz: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50">
+      <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-orange-50">
         <p className="text-gray-500">Loading quiz...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Edit Quiz</h1>
           <Link to="/teacher/quizzes" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>

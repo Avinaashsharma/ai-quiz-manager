@@ -34,9 +34,9 @@ const TeacherQuizResults: React.FC = () => {
     fetchData();
   }, [id]);
 
-  if (isLoading) return <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50"><p className="text-gray-400">Loading results...</p></div>;
+  if (isLoading) return <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-orange-50"><p className="text-gray-400">Loading results...</p></div>;
   if (error) return (
-    <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-gray-50">
+    <div className="min-h-[calc(100vh-56px)] flex flex-col items-center justify-center bg-orange-50">
       <p className="text-red-500 text-lg mb-4">{error}</p>
       <Link to="/teacher/quizzes" className="px-6 py-2.5 bg-orange-500 text-white rounded-lg font-semibold">Back to Quizzes</Link>
     </div>
@@ -47,12 +47,12 @@ const TeacherQuizResults: React.FC = () => {
     if (i === 0) return 'bg-yellow-100 text-yellow-700';
     if (i === 1) return 'bg-gray-100 text-gray-600';
     if (i === 2) return 'bg-orange-100 text-orange-700';
-    return 'bg-gray-50 text-gray-400';
+    return 'bg-orange-50 text-gray-400';
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{quiz?.title}</h1>
@@ -103,7 +103,7 @@ const TeacherQuizResults: React.FC = () => {
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
+                  <tr className="border-b border-gray-100 bg-orange-50">
                     <th className="text-left px-5 py-3 text-gray-500 font-medium">Student</th>
                     <th className="text-center px-3 py-3 text-gray-500 font-medium">Score</th>
                     <th className="text-center px-3 py-3 text-gray-500 font-medium hidden md:table-cell">Correct</th>
@@ -114,7 +114,7 @@ const TeacherQuizResults: React.FC = () => {
                 </thead>
                 <tbody>
                   {attempts.map((a) => (
-                    <tr key={a._id} className="border-b border-gray-50 hover:bg-gray-50">
+                    <tr key={a._id} className="border-b border-gray-50 hover:bg-orange-50">
                       <td className="px-5 py-3">
                         <p className="font-medium text-gray-900">{a.student.name}</p>
                         <p className="text-gray-400 text-xs">{a.student.email}</p>
@@ -140,7 +140,7 @@ const TeacherQuizResults: React.FC = () => {
             ) : (
               <div className="divide-y divide-gray-50">
                 {leaderboard.map((entry, index) => (
-                  <div key={entry._id} className={`flex items-center gap-4 px-5 py-4 ${index < 3 ? 'bg-gray-50/50' : ''}`}>
+                  <div key={entry._id} className={`flex items-center gap-4 px-5 py-4 ${index < 3 ? 'bg-orange-50/50' : ''}`}>
                     <span className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm shrink-0 ${medalColor(index)}`}>{index + 1}</span>
                     <div className="flex-1">
                       <p className="font-medium text-gray-900">{entry.student.name}</p>

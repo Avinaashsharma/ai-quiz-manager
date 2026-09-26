@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
@@ -12,10 +13,11 @@ const Navbar: React.FC = () => {
   };
 
   const dashboardPath = user?.role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard';
+  const isLoginActive = location.pathname === '/login';
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
         <div className="flex items-center justify-between h-14">
           <Link to={user ? dashboardPath : '/'} className="flex items-center gap-2">
             <span className="text-orange-500 text-xl font-bold">◆</span>
@@ -26,16 +28,37 @@ const Navbar: React.FC = () => {
             <div className="flex items-center gap-4">
               {user.role === 'teacher' && (
                 <>
-                  <Link to="/teacher/quizzes" className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block">
+                  <Link
+                    to="/teacher/quizzes"
+                    className={`text-sm transition-colors hidden sm:block ${
+                      location.pathname === '/teacher/quizzes'
+                        ? 'text-orange-600 font-semibold'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
                     My Quizzes
                   </Link>
-                  <Link to="/teacher/quizzes/create" className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block">
+                  <Link
+                    to="/teacher/quizzes/create"
+                    className={`text-sm transition-colors hidden sm:block ${
+                      location.pathname === '/teacher/quizzes/create'
+                        ? 'text-orange-600 font-semibold'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
                     Create
                   </Link>
                 </>
               )}
               {user.role === 'student' && (
-                <Link to="/student/join" className="text-sm text-gray-600 hover:text-gray-900 transition-colors hidden sm:block">
+                <Link
+                  to="/student/join"
+                  className={`text-sm transition-colors hidden sm:block ${
+                    location.pathname === '/student/join'
+                      ? 'text-orange-600 font-semibold'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
                   Join Quiz
                 </Link>
               )}
@@ -49,7 +72,14 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <Link to="/login" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+              <Link
+                to="/login"
+                className={`text-sm px-4 py-2 rounded-lg font-medium transition-colors ${
+                  isLoginActive
+                    ? 'bg-gray-900 text-white'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                }`}
+              >
                 Login
               </Link>
               <Link

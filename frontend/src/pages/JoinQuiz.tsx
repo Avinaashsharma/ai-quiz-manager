@@ -47,14 +47,14 @@ const JoinQuiz: React.FC = () => {
 
   if (waitingRoom) {
     return (
-      <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50 px-4">
+      <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-orange-50 px-4">
         <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-sm text-center">
           <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-orange-500 text-xl">⏳</span>
           </div>
           <h2 className="text-xl font-bold text-gray-900 mb-2">Waiting for Teacher</h2>
           <p className="text-gray-500 text-sm mb-6">You&apos;ve joined the quiz room. The quiz will start when your teacher is ready.</p>
-          <div className="bg-gray-50 rounded-lg p-4 mb-4">
+          <div className="bg-orange-50 rounded-lg p-4 mb-4">
             <p className="text-gray-400 text-xs mb-1">Room Code</p>
             <p className="text-3xl font-mono font-bold text-orange-500 tracking-widest">{joinCode}</p>
           </div>
@@ -68,7 +68,7 @@ const JoinQuiz: React.FC = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-orange-50 px-4">
       <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-sm">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-1">Join Quiz</h2>
         <p className="text-gray-500 text-sm text-center mb-6">Enter the code provided by your teacher</p>

@@ -65,7 +65,7 @@ const VerifyOtp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-orange-50 px-4">
       <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-sm">
         <div className="text-center mb-6">
           <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4">

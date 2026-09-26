@@ -26,7 +26,7 @@ const LiveLeaderboard: React.FC<LiveLeaderboardProps> = ({ leaderboard, currentU
     if (i === 0) return 'bg-yellow-100 text-yellow-700 border-yellow-300';
     if (i === 1) return 'bg-gray-100 text-gray-600 border-gray-300';
     if (i === 2) return 'bg-orange-100 text-orange-700 border-orange-300';
-    return 'bg-gray-50 text-gray-500 border-gray-200';
+    return 'bg-orange-50 text-gray-500 border-gray-200';
   };
 
   const scoreColor = (pct: number) =>
