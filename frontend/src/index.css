@@ -110,3 +110,34 @@ html {
 .animate-spin-slow {
   animation: spin 1.2s linear infinite;
 }
+
+/* ======= Mobile Body Text: smaller + thinner ======= */
+/* Only affects paragraph/body text — headings are completely untouched */
+@media (max-width: 639px) {
+  p,
+  li,
+  td,
+  th,
+  label {
+    font-size: 0.78rem !important;    /* ~12.5px — compact */
+    line-height: 1.5 !important;
+    font-weight: 300 !important;      /* light / patla */
+  }
+
+  /* Only target spans NOT inside headings */
+  span:not(h1 *):not(h2 *):not(h3 *):not(h4 *):not(h5 *):not(h6 *) {
+    font-size: 0.78rem !important;
+    line-height: 1.5 !important;
+    font-weight: 300 !important;
+  }
+
+  /* Keep buttons & inputs at normal size */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    font-size: unset;
+    font-weight: unset;
+  }
+}

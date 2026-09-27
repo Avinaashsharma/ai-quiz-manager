@@ -4,34 +4,37 @@ import { Link } from 'react-router-dom';
 const Home: React.FC = () => {
   return (
     <div className="min-h-[calc(100vh-56px)]">
-      <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Hero */}
-        <div className="pt-20 pb-16 text-center">
+        <div className="pt-24 sm:pt-28 pb-4 text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.12] tracking-tight mb-6 max-w-5xl mx-auto">
             Create Quizzes <span className="whitespace-nowrap">in <span className="text-orange-500">Seconds</span>,</span><br />
             Not Hours
           </h1>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto mb-10">
+          <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto mb-14">
             Generate smart quizzes with AI, manage your classroom, and track student progress, all in one simple platform built for teachers and students.
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
+          <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
             <Link
               to="/register"
-              className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm"
+              className="px-5 sm:px-8 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm text-sm sm:text-base"
             >
               Get Started Free
             </Link>
             <Link
               to="/login"
-              className="px-8 py-3 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors"
+              className="px-5 sm:px-8 py-2.5 sm:py-3 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors text-sm sm:text-base"
             >
               Sign In
             </Link>
           </div>
+          <div className="mt-28 sm:mt-32">
+            <hr className="border-t border-gray-300" />
+          </div>
         </div>
 
         {/* Features */}
-        <div className="pb-24 pt-12 sm:pt-16 mt-6 sm:mt-8">
+        <div className="pb-24 pt-8 sm:pt-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 lg:gap-x-16 xl:gap-x-20 gap-y-12">
             {[
               {
@@ -89,8 +92,8 @@ const Home: React.FC = () => {
 
         {/* Stats */}
         <div className="pb-24">
-          <div className="bg-white border border-gray-200 rounded-2xl p-10 sm:p-14">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-14">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-8 text-center">
               {[
                 { value: 'AI-Powered', label: 'Quiz Generation' },
                 { value: 'Real-Time', label: 'Live Competitions' },
@@ -98,8 +101,8 @@ const Home: React.FC = () => {
                 { value: '100%', label: 'Free to Use' },
               ].map((s) => (
                 <div key={s.label}>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-orange-500 mb-1">{s.value}</div>
-                  <div className="text-sm text-gray-500 font-medium">{s.label}</div>
+                  <div className="text-lg sm:text-2xl md:text-3xl font-extrabold text-orange-500 mb-1">{s.value}</div>
+                  <div className="text-xs sm:text-sm text-gray-500 font-medium">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -137,16 +140,16 @@ const Home: React.FC = () => {
           <div className="bg-white rounded-2xl p-10 sm:p-16 text-center">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Ready to Transform Your Classroom?</h2>
             <p className="text-gray-600 max-w-lg mx-auto mb-8">Join thousands of educators who are making assessments smarter, faster, and more fun with AI Quiz Manager.</p>
-            <div className="flex gap-4 justify-center flex-wrap">
+            <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
               <Link
                 to="/register"
-                className="px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm"
+                className="px-5 sm:px-8 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm text-sm sm:text-base"
               >
                 Get Started Free
               </Link>
               <Link
                 to="/login"
-                className="px-8 py-3 bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 rounded-lg font-semibold transition-colors"
+                className="px-5 sm:px-8 py-2.5 sm:py-3 bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 rounded-lg font-semibold transition-colors text-sm sm:text-base"
               >
                 Sign In
               </Link>
@@ -157,7 +160,7 @@ const Home: React.FC = () => {
 
       {/* Footer */}
       <footer className="bg-gray-600 text-gray-100 mt-0">
-        <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16 py-16">
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
             {/* Brand */}
             <div>

@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         <div className="flex items-center justify-between h-14">
           <Link to={user ? dashboardPath : '/'} className="flex items-center gap-2">
             <span className="text-orange-500 text-xl font-bold">◆</span>
