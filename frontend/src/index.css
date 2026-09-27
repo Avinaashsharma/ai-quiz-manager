@@ -1,10 +1,67 @@
 @import "tailwindcss";
 
-@theme {
-  --color-orange-50: #fffcf8;
+/* ======= Neue Montreal Font ======= */
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('/fonts/ppneuemontreal-book.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('/fonts/ppneuemontreal-italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('/fonts/ppneuemontreal-medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('/fonts/ppneuemontreal-bold.woff') format('woff');
+  font-weight: 600 700 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback / Alias for PP Neue Montreal */
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-book.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/ppneuemontreal-bold.woff') format('woff');
+  font-weight: 600 700 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-orange-50: #fffcf8;
+  --font-sans: 'Neue Montreal', 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
 
 /* ======= Design System ======= */
 :root {
@@ -17,17 +74,21 @@
 }
 
 * {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Neue Montreal', 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 body {
+  font-family: 'Neue Montreal', 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background-color: #fffcf8;
   color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  font-family: 'Neue Montreal', 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Custom scrollbar */
