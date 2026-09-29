@@ -58,7 +58,7 @@ const TeacherQuizResults: React.FC = () => {
             <h1 className="text-2xl font-bold text-gray-900">{quiz?.title}</h1>
             <p className="text-gray-500 text-sm">Results & Leaderboard</p>
           </div>
-          <Link to="/teacher/quizzes" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>
+          <Link to="/teacher/quizzes" className="hidden sm:inline-block text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>
         </div>
 
         {/* Stats */}

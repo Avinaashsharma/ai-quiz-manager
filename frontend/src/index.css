@@ -111,6 +111,107 @@ html {
   animation: spin 1.2s linear infinite;
 }
 
+/* Continuous shining effect for CTA buttons */
+@keyframes btn-shine {
+  0% {
+    left: -120%;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.7;
+  }
+  70% {
+    left: 180%;
+    opacity: 0;
+  }
+  100% {
+    left: 180%;
+    opacity: 0;
+  }
+}
+
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -120%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  animation: btn-shine 2s ease-in-out infinite;
+}
+
+/* Hero Ambient Blobs & Floating Animation */
+@keyframes blob-float-1 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(35px, -30px) scale(1.08);
+  }
+  66% {
+    transform: translate(-25px, 25px) scale(0.95);
+  }
+}
+
+@keyframes blob-float-2 {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(-30px, 35px) scale(1.1);
+  }
+  66% {
+    transform: translate(30px, -20px) scale(0.92);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(-1deg);
+  }
+}
+
+.animate-blob-1 {
+  animation: blob-float-1 8s ease-in-out infinite;
+}
+
+.animate-blob-2 {
+  animation: blob-float-2 10s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 4.5s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 5s ease-in-out infinite;
+}
+
 /* ======= Mobile Body Text: smaller + thinner ======= */
 /* Only affects paragraph/body text — headings are completely untouched */
 @media (max-width: 639px) {
@@ -124,20 +225,34 @@ html {
     font-weight: 300 !important;      /* light / patla */
   }
 
-  /* Only target spans NOT inside headings */
-  span:not(h1 *):not(h2 *):not(h3 *):not(h4 *):not(h5 *):not(h6 *) {
+  /* Only target spans NOT inside headings and NOT inside nav */
+  span:not(h1 *):not(h2 *):not(h3 *):not(h4 *):not(h5 *):not(h6 *):not(nav *):not(nav) {
     font-size: 0.78rem !important;
     line-height: 1.5 !important;
     font-weight: 300 !important;
   }
 
-  /* Keep buttons & inputs at normal size */
-  button,
-  a,
-  input,
-  select,
-  textarea {
-    font-size: unset;
-    font-weight: unset;
+  /* Navbar mobile specific responsive sizing */
+  .nav-brand-text {
+    font-size: 1.35rem !important; /* Prominent big text on mobile */
+    font-weight: 800 !important;
+  }
+  .nav-brand-icon {
+    font-size: 1.45rem !important;
+  }
+  .nav-logout-btn {
+    font-size: 11px !important;    /* Small & compact logout button on mobile */
+    padding: 3px 9px !important;
+    height: 26px !important;
+    line-height: 1.2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+  .nav-auth-btn {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+    height: 28px !important;
+    display: inline-flex !important;
+    align-items: center !important;
   }
 }

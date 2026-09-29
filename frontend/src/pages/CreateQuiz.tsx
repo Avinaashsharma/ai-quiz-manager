@@ -58,7 +58,7 @@ const CreateQuiz: React.FC = () => {
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Create Quiz</h1>
-          <Link to="/teacher/quizzes" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>
+          <Link to="/teacher/quizzes" className="hidden sm:inline-block text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>
         </div>
 
         {/* AI Generation Panel */}
@@ -79,13 +79,13 @@ const CreateQuiz: React.FC = () => {
               <input
                 type="text" placeholder="e.g. JavaScript Basics" value={aiTopic}
                 onChange={(e) => setAiTopic(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-black"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Difficulty</label>
               <select value={aiDifficulty} onChange={(e) => setAiDifficulty(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:border-black">
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
                 <option value="hard">Hard</option>
@@ -95,19 +95,30 @@ const CreateQuiz: React.FC = () => {
               <label className="block text-sm font-medium text-gray-700 mb-1">Questions</label>
               <input type="number" min={1} max={20} value={aiNumQuestions}
                 onChange={(e) => setAiNumQuestions(parseInt(e.target.value) || 1)}
-                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:border-black"
               />
             </div>
           </div>
-          <button type="button" onClick={handleGenerate} disabled={isGenerating}
-            className="w-full py-2.5 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors">
-            {isGenerating ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
-                Generating...
-              </span>
-            ) : '✨ Generate Quiz'}
-          </button>
+          <div className="flex justify-center mt-4 sm:mt-8">
+            <button
+              type="button"
+              onClick={handleGenerate}
+              disabled={isGenerating}
+              className="w-full sm:w-auto min-w-[240px] sm:min-w-[280px] px-8 py-2.5 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors text-sm sm:text-base inline-flex items-center justify-center gap-2 shadow-sm"
+            >
+              {isGenerating ? (
+                <>
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  <span>Generating...</span>
+                </>
+              ) : (
+                '✨ Generate Quiz'
+              )}
+            </button>
+          </div>
         </div>
 
         <p className="text-gray-400 text-sm mb-6">Edit the generated quiz below or create one manually, then save.</p>

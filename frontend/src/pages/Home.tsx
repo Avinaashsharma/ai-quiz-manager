@@ -1,38 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import HeroWaveBackground from '../components/HeroWaveBackground';
+import Footer from '../components/Footer';
 
 const Home: React.FC = () => {
   return (
     <div className="min-h-[calc(100vh-56px)]">
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        {/* Hero */}
-        <div className="pt-24 sm:pt-28 pb-4 text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.12] tracking-tight mb-6 max-w-5xl mx-auto">
-            Create Quizzes <span className="whitespace-nowrap">in <span className="text-orange-500">Seconds</span>,</span><br />
-            Not Hours
-          </h1>
-          <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto mb-14">
-            Generate smart quizzes with AI, manage your classroom, and track student progress, all in one simple platform built for teachers and students.
-          </p>
-          <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
-            <Link
-              to="/register"
-              className="px-5 sm:px-8 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm text-sm sm:text-base"
-            >
-              Get Started Free
-            </Link>
-            <Link
-              to="/login"
-              className="px-5 sm:px-8 py-2.5 sm:py-3 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors text-sm sm:text-base"
-            >
-              Sign In
-            </Link>
-          </div>
-          <div className="mt-28 sm:mt-32">
-            <hr className="border-t border-gray-300" />
+      {/* Hero Section with Full-Width Dynamic Fluid Wave Background */}
+      <section className="relative overflow-hidden w-full">
+        {/* Dynamic Flowing Fluid Wave Background */}
+        <HeroWaveBackground />
+
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative">
+          {/* Hero */}
+          <div className="pt-16 sm:pt-20 pb-4 text-center">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 leading-[1.08] tracking-tight mb-6 max-w-6xl mx-auto">
+              Create Quizzes <span className="whitespace-nowrap">in <span className="text-orange-500">Seconds</span>,</span><br />
+              Not Hours
+            </h1>
+            <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto mb-14">
+              Generate smart quizzes with AI, manage your classroom, and track student progress, all in one simple platform built for teachers and students.
+            </p>
+            <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
+              <Link
+                to="/register"
+                className="btn-shine px-5 sm:px-8 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm text-sm sm:text-base inline-block text-center"
+              >
+                Get Started Free
+              </Link>
+              <Link
+                to="/login"
+                className="px-5 sm:px-8 py-2.5 sm:py-3 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors text-sm sm:text-base"
+              >
+                Sign In
+              </Link>
+            </div>
+            <div className="mt-16 sm:mt-20">
+              <hr className="border-t border-gray-300" />
+            </div>
           </div>
         </div>
+      </section>
 
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative">
         {/* Features */}
         <div className="pb-24 pt-8 sm:pt-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 lg:gap-x-16 xl:gap-x-20 gap-y-12">
@@ -69,7 +79,7 @@ const Home: React.FC = () => {
         <div className="pb-24 pt-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">How It Works</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Get started in minutes. No setup, no complex configurations — just create, share, and track.</p>
+            <p className="text-gray-500 max-w-xl mx-auto">Get started in minutes. No setup, no complex configurations,  just create, share, and track.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {[
@@ -92,7 +102,7 @@ const Home: React.FC = () => {
 
         {/* Stats */}
         <div className="pb-24">
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-14">
+          <div className="py-6 sm:py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-8 text-center">
               {[
                 { value: 'AI-Powered', label: 'Quiz Generation' },
@@ -137,13 +147,13 @@ const Home: React.FC = () => {
 
         {/* CTA */}
         <div className="pb-24">
-          <div className="bg-white rounded-2xl p-10 sm:p-16 text-center">
+          <div className="text-center py-6 sm:py-10">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Ready to Transform Your Classroom?</h2>
             <p className="text-gray-600 max-w-lg mx-auto mb-8">Join thousands of educators who are making assessments smarter, faster, and more fun with AI Quiz Manager.</p>
             <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
               <Link
                 to="/register"
-                className="px-5 sm:px-8 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm text-sm sm:text-base"
+                className="btn-shine px-5 sm:px-8 py-2.5 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors shadow-sm text-sm sm:text-base inline-block text-center"
               >
                 Get Started Free
               </Link>
@@ -159,60 +169,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-600 text-gray-100 mt-0">
-        <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            {/* Brand */}
-            <div>
-              <h3 className="text-white text-lg font-bold mb-3">AI Quiz Manager</h3>
-              <p className="text-sm leading-relaxed text-gray-200">Create smart quizzes with AI, host live sessions, and track student performance — all in one platform.</p>
-            </div>
-
-            {/* Product */}
-            <div>
-              <h4 className="text-white text-sm font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-200">
-                <li><Link to="/register" className="hover:text-orange-400 transition-colors">Get Started</Link></li>
-                <li><Link to="/login" className="hover:text-orange-400 transition-colors">Sign In</Link></li>
-                <li><span>AI Quiz Generation</span></li>
-                <li><span>Live Quizzes</span></li>
-              </ul>
-            </div>
-
-            {/* Resources */}
-            <div>
-              <h4 className="text-white text-sm font-semibold mb-4">Resources</h4>
-              <ul className="space-y-2 text-sm text-gray-200">
-                <li><span>Documentation</span></li>
-                <li><span>Help Center</span></li>
-                <li><span>API Reference</span></li>
-                <li><span>Release Notes</span></li>
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h4 className="text-white text-sm font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-200">
-                <li><span>About Us</span></li>
-                <li><span>Privacy Policy</span></li>
-                <li><span>Terms of Service</span></li>
-                <li><span>Contact</span></li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom bar */}
-          <div className="border-t border-gray-500 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-gray-200">© {new Date().getFullYear()} AI Quiz Manager. All rights reserved.</p>
-            <div className="flex gap-6 text-xs">
-              <span className="text-gray-200 hover:text-orange-400 cursor-pointer transition-colors">Privacy</span>
-              <span className="text-gray-200 hover:text-orange-400 cursor-pointer transition-colors">Terms</span>
-              <span className="text-gray-200 hover:text-orange-400 cursor-pointer transition-colors">Cookies</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer className="mt-0" />
     </div>
   );
 };

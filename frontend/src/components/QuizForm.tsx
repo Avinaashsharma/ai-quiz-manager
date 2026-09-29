@@ -69,7 +69,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
       )}
 
       {/* Quiz Details */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6 space-y-4">
+      <div className="space-y-4">
         <h2 className="text-lg font-semibold text-gray-900">Quiz Details</h2>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
@@ -78,7 +78,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
             placeholder="Quiz Title"
             value={formData.title}
             onChange={(e) => setFormData((p) => ({ ...p, title: e.target.value }))}
-            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            className="w-full max-w-md px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-black"
           />
         </div>
         <div>
@@ -87,40 +87,38 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
             placeholder="Brief description"
             value={formData.description}
             onChange={(e) => setFormData((p) => ({ ...p, description: e.target.value }))}
-            rows={2}
-            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-none"
+            rows={4}
+            className="w-full max-w-md px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-black resize-none"
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
-            <input
-              type="number"
-              min={1}
-              max={300}
-              value={formData.duration}
-              onChange={(e) => setFormData((p) => ({ ...p, duration: parseInt(e.target.value) || 1 }))}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value }))}
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-            >
-              <option value="draft">Draft</option>
-              <option value="active">Active</option>
-              <option value="closed">Closed</option>
-            </select>
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Duration (min)</label>
+          <input
+            type="number"
+            min={1}
+            max={300}
+            value={formData.duration}
+            onChange={(e) => setFormData((p) => ({ ...p, duration: parseInt(e.target.value) || 1 }))}
+            className="w-full max-w-md px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:border-black"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+          <select
+            value={formData.status}
+            onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value }))}
+            className="w-full max-w-md px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 focus:outline-none focus:border-black"
+          >
+            <option value="draft">Draft</option>
+            <option value="active">Active</option>
+            <option value="closed">Closed</option>
+          </select>
         </div>
       </div>
 
       {/* Questions */}
       {formData.questions.map((q, qIndex) => (
-        <div key={qIndex} className="bg-white border border-gray-200 rounded-lg p-6 space-y-4">
+        <div key={qIndex} className="bg-white border border-orange-300 rounded-xl p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-gray-900">Question {qIndex + 1}</h3>
             {formData.questions.length > 1 && (
@@ -134,7 +132,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
             value={q.question}
             onChange={(e) => updateQuestion(qIndex, 'question', e.target.value)}
             rows={2}
-            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-none"
+            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-black resize-none"
           />
           <div className="space-y-2">
             <label className="text-sm text-gray-500">Options (click to mark correct)</label>
@@ -156,7 +154,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
                   placeholder={`Option ${String.fromCharCode(65 + oIndex)}`}
                   value={opt}
                   onChange={(e) => updateOption(qIndex, oIndex, e.target.value)}
-                  className="flex-1 px-4 py-2 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  className="w-full max-w-md px-4 py-2 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-black"
                 />
               </div>
             ))}
@@ -166,7 +164,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
             placeholder="Explanation (optional)"
             value={q.explanation}
             onChange={(e) => updateQuestion(qIndex, 'explanation', e.target.value)}
-            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            className="w-full max-w-[492px] px-4 py-2.5 rounded-lg border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-black"
           />
         </div>
       ))}
@@ -183,7 +181,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex-1 py-2.5 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors"
+          className="px-6 sm:px-8 py-2.5 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition-colors shadow-sm"
         >
           {isSubmitting ? 'Saving...' : submitLabel}
         </button>
