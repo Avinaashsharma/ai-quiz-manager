@@ -48,8 +48,22 @@ const TeacherQuizList: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-gradient-to-br from-orange-50 via-white to-orange-50 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+        <span className="absolute text-4xl opacity-40 top-[6%] left-[8%] animate-float" style={{animationDuration:'4s'}}>📝</span>
+        <span className="absolute text-5xl opacity-35 top-[12%] right-[10%] animate-float-reverse" style={{animationDuration:'5s'}}>📊</span>
+        <span className="absolute text-4xl opacity-40 bottom-[18%] left-[6%] animate-float" style={{animationDuration:'3.5s'}}>🎓</span>
+        <span className="absolute text-5xl opacity-35 bottom-[10%] right-[12%] animate-float-reverse" style={{animationDuration:'4.5s'}}>🏆</span>
+        <span className="absolute text-3xl opacity-40 top-[42%] left-[4%] animate-float-reverse" style={{animationDuration:'5s'}}>✏️</span>
+        <span className="absolute text-3xl opacity-[0.38] top-[28%] right-[5%] animate-float" style={{animationDuration:'3s'}}>💡</span>
+        <span className="absolute text-4xl opacity-[0.35] bottom-[32%] right-[28%] animate-float-reverse" style={{animationDuration:'4s'}}>❓</span>
+        <span className="absolute text-3xl opacity-[0.40] top-[62%] left-[22%] animate-float" style={{animationDuration:'3.8s'}}>📚</span>
+        <span className="absolute text-4xl opacity-[0.35] top-[4%] left-[43%] animate-float-reverse" style={{animationDuration:'4.2s'}}>⭐</span>
+        <span className="absolute text-3xl opacity-[0.38] bottom-[6%] left-[38%] animate-float" style={{animationDuration:'3.2s'}}>🎯</span>
+        <span className="absolute text-4xl opacity-[0.35] top-[20%] left-[28%] animate-float-reverse" style={{animationDuration:'5.5s'}}>🧠</span>
+        <span className="absolute text-3xl opacity-40 bottom-[48%] right-[4%] animate-float" style={{animationDuration:'4.8s'}}>📋</span>
+      </div>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">My Quizzes</h1>

@@ -54,8 +54,23 @@ const CreateQuiz: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-orange-50">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-[calc(100vh-56px)] bg-gradient-to-br from-orange-50 via-white to-orange-50 relative overflow-hidden">
+      {/* Scattered quiz-themed icons — same as JoinQuiz */}
+      <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
+        <span className="absolute text-4xl opacity-40 top-[8%] left-[10%] animate-float" style={{animationDuration:'4s'}}>📚</span>
+        <span className="absolute text-5xl opacity-35 top-[15%] right-[12%] animate-float-reverse" style={{animationDuration:'5s'}}>✏️</span>
+        <span className="absolute text-4xl opacity-40 bottom-[20%] left-[8%] animate-float" style={{animationDuration:'3.5s'}}>💡</span>
+        <span className="absolute text-5xl opacity-35 bottom-[12%] right-[15%] animate-float-reverse" style={{animationDuration:'4.5s'}}>🧠</span>
+        <span className="absolute text-3xl opacity-40 top-[45%] left-[5%] animate-float-reverse" style={{animationDuration:'5s'}}>📝</span>
+        <span className="absolute text-3xl opacity-[0.38] top-[30%] right-[6%] animate-float" style={{animationDuration:'3s'}}>🎓</span>
+        <span className="absolute text-4xl opacity-[0.35] bottom-[35%] right-[30%] animate-float-reverse" style={{animationDuration:'4s'}}>❓</span>
+        <span className="absolute text-3xl opacity-[0.42] top-[65%] left-[25%] animate-float" style={{animationDuration:'3.8s'}}>🏆</span>
+        <span className="absolute text-4xl opacity-[0.35] top-[5%] left-[45%] animate-float-reverse" style={{animationDuration:'4.2s'}}>⭐</span>
+        <span className="absolute text-3xl opacity-[0.38] bottom-[8%] left-[40%] animate-float" style={{animationDuration:'3.2s'}}>🔔</span>
+        <span className="absolute text-4xl opacity-[0.35] top-[22%] left-[30%] animate-float-reverse" style={{animationDuration:'5.5s'}}>🎯</span>
+        <span className="absolute text-3xl opacity-40 bottom-[50%] right-[5%] animate-float" style={{animationDuration:'4.8s'}}>📋</span>
+      </div>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Create Quiz</h1>
           <Link to="/teacher/quizzes" className="hidden sm:inline-block text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>

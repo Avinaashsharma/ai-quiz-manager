@@ -16,6 +16,7 @@ interface AuthContextType {
   register: (name: string, email: string, password: string, role: string) => Promise<{ requiresVerification: boolean; email: string }>;
   verifyOtp: (email: string, otp: string) => Promise<void>;
   logout: () => void;
+  updateName: (name: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -79,8 +80,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
+  const updateName = async (name: string) => {
+    const res = await api.put('/auth/me', { name });
+    setUser(res.data.data.user);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, isLoading, login, register, verifyOtp, logout }}>
+    <AuthContext.Provider value={{ user, token, isLoading, login, register, verifyOtp, logout, updateName }}>
       {children}
     </AuthContext.Provider>
   );

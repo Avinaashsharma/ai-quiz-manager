@@ -9,7 +9,9 @@ const App: React.FC = () => {
     <BrowserRouter>
       <AuthProvider>
         <Navbar />
-        <AppRoutes />
+        <div className="pb-12 sm:pb-0">
+          <AppRoutes />
+        </div>
       </AuthProvider>
     </BrowserRouter>
   );

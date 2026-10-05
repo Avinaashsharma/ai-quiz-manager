@@ -1,7 +1,7 @@
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const router = express.Router();
-const { register, verifyOtp, login, getMe } = require('../controllers/authController');
+const { register, verifyOtp, login, getMe, updateName } = require('../controllers/authController');
 const { protect } = require('../middleware/auth');
 
 // Rate limit auth endpoints: 20 requests per 15 minutes per IP
@@ -16,6 +16,6 @@ const authLimiter = rateLimit({
 router.post('/register', authLimiter, register);
 router.post('/verify-otp', authLimiter, verifyOtp);
 router.post('/login', authLimiter, login);
-router.get('/me', protect, getMe);
+router.route('/me').get(protect, getMe).put(protect, updateName);
 
 module.exports = router;

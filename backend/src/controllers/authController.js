@@ -248,5 +248,28 @@ const getMe = async (req, res, next) => {
     next(err);
   }
 };
+/**
+ * @desc    Update current user's name
+ * @route   PUT /api/auth/me
+ * @access  Private
+ */
+const updateName = async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    if (!name || !name.trim()) {
+      const error = new Error('Name is required');
+      error.statusCode = 400;
+      return next(error);
+    }
+    req.user.name = name.trim();
+    await req.user.save();
+    res.status(200).json({
+      success: true,
+      data: { user: { _id: req.user._id, name: req.user.name, email: req.user.email, role: req.user.role } },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
-module.exports = { register, verifyOtp, login, getMe };
+module.exports = { register, verifyOtp, login, getMe, updateName };

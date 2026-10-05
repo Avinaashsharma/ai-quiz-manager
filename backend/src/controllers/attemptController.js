@@ -163,10 +163,13 @@ const getMyAttempts = async (req, res, next) => {
       .populate({ path: 'quiz', select: 'title description duration' })
       .sort({ createdAt: -1 });
 
+    // Filter out attempts whose quiz was deleted (populate returns null)
+    const valid = attempts.filter((a) => a.quiz != null);
+
     res.status(200).json({
       success: true,
-      count: attempts.length,
-      data: { attempts },
+      count: valid.length,
+      data: { attempts: valid },
     });
   } catch (err) {
     next(err);

@@ -5,6 +5,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import TeacherDashboard from '../pages/TeacherDashboard';
 import StudentDashboard from '../pages/StudentDashboard';
+import StudentAttempts from '../pages/StudentAttempts';
 import TeacherQuizList from '../pages/TeacherQuizList';
 import CreateQuiz from '../pages/CreateQuiz';
 import EditQuiz from '../pages/EditQuiz';
@@ -16,6 +17,7 @@ import QuizAttempt from '../pages/QuizAttempt';
 import QuizResult from '../pages/QuizResult';
 import VerifyOtp from '../pages/VerifyOtp';
 import NotFound from '../pages/NotFound';
+import Profile from '../pages/Profile';
 import ProtectedRoute from '../components/ProtectedRoute';
 
 const AppRoutes: React.FC = () => {
@@ -94,6 +96,14 @@ const AppRoutes: React.FC = () => {
         }
       />
       <Route
+        path="/student/attempts"
+        element={
+          <ProtectedRoute allowedRoles={['student']}>
+            <StudentAttempts />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/student/join"
         element={
           <ProtectedRoute allowedRoles={['student']}>
@@ -114,6 +124,15 @@ const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute allowedRoles={['student']}>
             <QuizResult />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute allowedRoles={['student', 'teacher']}>
+            <Profile />
           </ProtectedRoute>
         }
       />

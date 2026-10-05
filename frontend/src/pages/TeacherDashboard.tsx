@@ -53,13 +53,27 @@ const TeacherDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-orange-50 flex flex-col justify-between">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1">
+    <div className="min-h-[calc(100vh-56px)] bg-orange-50 flex flex-col justify-between relative overflow-hidden">
+      {/* Animated geometric background */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
+        <svg className="absolute -top-16 -left-16 w-72 h-72 animate-[spin_30s_linear_infinite] opacity-[0.07]" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="#f97316" strokeWidth="18"/></svg>
+        <svg className="absolute -bottom-20 -right-16 w-64 h-64 animate-float opacity-[0.06]" style={{animationDuration:'8s'}} viewBox="0 0 200 200"><circle cx="100" cy="100" r="90" fill="#fb923c"/></svg>
+        <svg className="absolute top-10 right-[12%] w-12 h-12 animate-float-reverse opacity-[0.1]" style={{animationDuration:'5s'}} viewBox="0 0 100 100"><polygon points="50,5 95,90 5,90" fill="none" stroke="#f97316" strokeWidth="8"/></svg>
+        <svg className="absolute top-6 left-[42%] w-8 h-8 animate-float opacity-[0.12]" style={{animationDuration:'4s'}} viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#fdba74"/></svg>
+        <svg className="absolute top-[35%] left-[4%] w-14 h-14 animate-float-reverse opacity-[0.09]" style={{animationDuration:'6s'}} viewBox="0 0 100 100"><polygon points="50,5 93,27 93,73 50,95 7,73 7,27" fill="none" stroke="#f97316" strokeWidth="7"/></svg>
+        <svg className="absolute top-[50%] right-[4%] w-10 h-10 animate-float opacity-[0.12]" style={{animationDuration:'5.5s'}} viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="#fb923c" strokeWidth="12"/></svg>
+        <svg className="absolute -bottom-10 left-[8%] w-48 h-48 animate-[spin_25s_linear_infinite_reverse] opacity-[0.06]" viewBox="0 0 200 200"><circle cx="100" cy="100" r="75" fill="none" stroke="#f97316" strokeWidth="20"/></svg>
+        <svg className="absolute bottom-[10%] right-[38%] w-8 h-8 animate-float-reverse opacity-[0.1]" style={{animationDuration:'4.5s'}} viewBox="0 0 100 100"><rect x="15" y="15" width="70" height="70" rx="12" fill="none" stroke="#f97316" strokeWidth="9"/></svg>
+        <svg className="absolute bottom-[20%] right-[18%] w-7 h-7 animate-float opacity-[0.09]" style={{animationDuration:'6.5s'}} viewBox="0 0 100 100"><polygon points="50,5 95,90 5,90" fill="#fb923c"/></svg>
+        <svg className="absolute top-8 right-8 opacity-[0.06]" width="96" height="96"><pattern id="td-dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f97316"/></pattern><rect width="96" height="96" fill="url(#td-dots)"/></svg>
+        <svg className="absolute bottom-10 left-10 opacity-[0.06]" width="80" height="80"><pattern id="td-dots2" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#f97316"/></pattern><rect width="80" height="80" fill="url(#td-dots2)"/></svg>
+      </div>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1 relative z-10">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold">
-            <span className="text-gray-900">Welcome,</span>{' '}
-            <span className="block sm:inline text-orange-400">{user?.name}</span>
+          <h1 className="flex items-baseline gap-1.5 flex-wrap">
+            <span className="text-lg font-medium text-gray-600">Welcome,</span>
+            <span className="text-3xl font-bold text-orange-400">{user?.name}</span>
           </h1>
           <p className="text-gray-500 text-sm mt-1">Here&apos;s an overview of your quizzes</p>
         </div>
