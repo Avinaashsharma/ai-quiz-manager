@@ -54,11 +54,7 @@ const StudentAttempts: React.FC = () => {
     });
   }, [attempts, searchQuery, filter]);
 
-  const scoreColor = (pct: number) =>
-    pct >= 80 ? 'text-green-600' : pct >= 50 ? 'text-orange-500' : 'text-red-500';
 
-  const scoreBg = (pct: number) =>
-    pct >= 80 ? 'bg-green-50' : pct >= 50 ? 'bg-orange-50' : 'bg-red-50';
 
   const scoreBadgeBg = (pct: number) =>
     pct >= 80
@@ -239,58 +235,54 @@ const StudentAttempts: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-3">
-            {filteredAttempts.map((attempt) => (
-              <div
-                key={attempt._id}
-                className="bg-white border border-gray-200 rounded-lg p-4 sm:p-5 hover:border-gray-300 transition-all flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
-              >
-                <div className="flex items-start sm:items-center gap-3.5 min-w-0">
-                  <div
-                    className={`shrink-0 w-12 h-12 rounded-xl ${scoreBg(
-                      attempt.percentage
-                    )} flex flex-col items-center justify-center`}
-                  >
-                    <span className={`text-base font-extrabold ${scoreColor(attempt.percentage)}`}>
-                      {attempt.percentage}%
-                    </span>
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className="font-semibold text-gray-900 text-base truncate">
-                      {attempt.quiz?.title || 'Quiz'}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 mt-1">
-                      <span>
-                        {attempt.score}/{attempt.totalQuestions} Correct
+            {filteredAttempts.map((attempt) => {
+              const pct = attempt.percentage;
+              const isExcellent = pct >= 80;
+              const isGood = pct >= 50;
+              const accentBar = isExcellent ? 'bg-green-400' : isGood ? 'bg-orange-400' : 'bg-red-400';
+              const cardBg = isExcellent ? 'from-green-50/50 to-white hover:border-green-200' : isGood ? 'from-orange-50/50 to-white hover:border-orange-200' : 'from-red-50/50 to-white hover:border-red-200';
+              const scorePill = isExcellent ? 'from-green-400 to-emerald-500' : isGood ? 'from-orange-400 to-amber-500' : 'from-red-400 to-rose-500';
+              return (
+                <div
+                  key={attempt._id}
+                  className={`flex items-stretch bg-gradient-to-r ${cardBg} border-2 border-gray-100 rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-0.5`}
+                >
+                  {/* left accent bar */}
+                  <span className={`w-1.5 shrink-0 ${accentBar}`} />
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 sm:p-5 w-full min-w-0">
+                    <div className="flex items-start sm:items-center gap-4 min-w-0">
+                      {/* score pill */}
+                      <span className={`shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${scorePill} flex items-center justify-center text-sm font-bold text-white shadow-sm`}>
+                        {pct}%
                       </span>
-                      <span>•</span>
-                      <span>{formatDate(attempt.submittedAt)}</span>
-                      <span>•</span>
-                      <span
-                        className={`px-2 py-0.5 rounded-full font-medium ${scoreBadgeBg(
-                          attempt.percentage
-                        )}`}
+                      <div className="min-w-0">
+                        <h3 className="font-semibold text-gray-900 text-base truncate">
+                          {attempt.quiz?.title || 'Quiz'}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 mt-1">
+                          <span>{attempt.score}/{attempt.totalQuestions} Correct</span>
+                          <span>•</span>
+                          <span>{formatDate(attempt.submittedAt)}</span>
+                          <span>•</span>
+                          <span className={`px-2 py-0.5 rounded-full font-medium ${scoreBadgeBg(pct)}`}>
+                            {isExcellent ? 'Excellent' : isGood ? 'Good' : 'Needs Work'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 self-end sm:self-auto shrink-0">
+                      <Link
+                        to={`/student/results/${attempt._id}`}
+                        className="px-4 py-2 bg-white hover:bg-orange-50 border border-orange-200 text-orange-600 rounded-xl text-sm font-semibold transition-all flex items-center gap-1.5 shadow-sm hover:shadow"
                       >
-                        {attempt.percentage >= 80
-                          ? 'Excellent'
-                          : attempt.percentage >= 50
-                          ? 'Good'
-                          : 'Needs Work'}
-                      </span>
+                        <span>View Result</span>
+                        <span>›</span>
+                      </Link>
                     </div>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-3 self-end sm:self-auto shrink-0">
-                  <Link
-                    to={`/student/results/${attempt._id}`}
-                    className="px-4 py-2 bg-orange-50 hover:bg-orange-100 text-orange-600 rounded-lg text-sm font-semibold transition-colors flex items-center gap-1.5"
-                  >
-                    <span>View Result</span>
-                    <span>→</span>
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

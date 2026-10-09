@@ -38,11 +38,6 @@ const StudentDashboard: React.FC = () => {
   const goodCount = attempts.filter((a) => a.percentage >= 50 && a.percentage < 80).length;
   const needsWorkCount = attempts.filter((a) => a.percentage < 50).length;
 
-  const scoreColor = (pct: number) =>
-    pct >= 80 ? 'text-green-600' : pct >= 50 ? 'text-orange-500' : 'text-red-500';
-  const scoreBg = (pct: number) =>
-    pct >= 80 ? 'bg-green-50' : pct >= 50 ? 'bg-orange-50' : 'bg-red-50';
-
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr);
     return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -134,38 +129,58 @@ const StudentDashboard: React.FC = () => {
             {isLoading ? (
               <p className="text-gray-400">Loading...</p>
             ) : attempts.length === 0 ? (
-              <div className="bg-white border border-gray-200 rounded-lg p-8 text-center">
-                <p className="text-4xl mb-3">🎯</p>
-                <p className="text-gray-900 font-semibold mb-1">No quizzes taken yet</p>
-                <p className="text-gray-500 text-sm mb-4">Join your first quiz and start tracking your progress!</p>
-                <Link to="/student/join" className="inline-block px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors">
-                  Join Your First Quiz
+              <div className="relative bg-gradient-to-br from-orange-50 via-amber-50 to-white border-2 border-orange-100 rounded-2xl p-10 text-center overflow-hidden">
+                {/* decorative blobs */}
+                <div className="absolute -top-6 -right-6 w-28 h-28 bg-orange-200/30 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-amber-200/30 rounded-full blur-2xl pointer-events-none" />
+                {/* icon with glow ring */}
+                <div className="relative inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-md border border-orange-100 mb-5">
+                  <span className="text-4xl animate-float-slow inline-block">🎯</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">No quizzes taken yet</h3>
+                <p className="text-gray-500 text-sm mb-6 max-w-xs mx-auto">
+                  Join your first quiz, test your knowledge, and start tracking your progress!
+                </p>
+                <Link
+                  to="/student/join"
+                  className="inline-flex items-center gap-2 px-7 py-3 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white rounded-xl font-semibold transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                >
+                  <span>🚀</span> Join Your First Quiz
                 </Link>
               </div>
             ) : (
               <div className="space-y-3">
-                {recentAttempts.map((attempt) => (
-                  <Link
-                    key={attempt._id}
-                    to={`/student/results/${attempt._id}`}
-                    className="block bg-white border border-gray-200 rounded-lg p-4 hover:border-gray-300 hover:shadow-sm transition-all"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <span className={`shrink-0 w-10 h-10 rounded-lg ${scoreBg(attempt.percentage)} flex items-center justify-center text-sm font-bold ${scoreColor(attempt.percentage)}`}>
-                          {attempt.percentage}%
+                {recentAttempts.map((attempt) => {
+                  const pct = attempt.percentage;
+                  const isExcellent = pct >= 80;
+                  const isGood = pct >= 50;
+                  const accentBar = isExcellent ? 'bg-green-400' : isGood ? 'bg-orange-400' : 'bg-red-400';
+                  const cardBg = isExcellent ? 'from-green-50/50 to-white hover:border-green-200' : isGood ? 'from-orange-50/50 to-white hover:border-orange-200' : 'from-red-50/50 to-white hover:border-red-200';
+                  const scorePill = isExcellent ? 'from-green-400 to-emerald-500' : isGood ? 'from-orange-400 to-amber-500' : 'from-red-400 to-rose-500';
+                  return (
+                    <Link
+                      key={attempt._id}
+                      to={`/student/results/${attempt._id}`}
+                      className={`flex items-stretch bg-gradient-to-r ${cardBg} border-2 border-gray-100 rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 hover:-translate-y-0.5`}
+                    >
+                      {/* left accent bar */}
+                      <span className={`w-1.5 shrink-0 ${accentBar}`} />
+                      <div className="flex items-center gap-4 p-4 w-full min-w-0">
+                        {/* score pill */}
+                        <span className={`shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${scorePill} flex items-center justify-center text-sm font-bold text-white shadow-sm`}>
+                          {pct}%
                         </span>
-                        <div className="min-w-0">
+                        <div className="min-w-0 flex-1">
                           <h3 className="font-semibold text-gray-900 truncate">{attempt.quiz!.title}</h3>
-                          <p className="text-gray-400 text-sm">
+                          <p className="text-gray-400 text-sm mt-0.5">
                             {attempt.score}/{attempt.totalQuestions} correct · {formatDate(attempt.submittedAt)}
                           </p>
                         </div>
+                        <span className="text-gray-300 shrink-0 text-lg">›</span>
                       </div>
-                      <span className="text-gray-300 text-sm shrink-0 ml-2">→</span>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
                 {attempts.length > 5 ? (
                   <Link
                     to="/student/attempts"
@@ -191,34 +206,58 @@ const StudentDashboard: React.FC = () => {
           <div className="space-y-5">
             {/* Score Distribution */}
             {attempts.length > 0 && (
-              <div className="bg-white border border-gray-200 rounded-lg p-5">
-                <h3 className="font-semibold text-gray-900 mb-4 text-sm">Score Distribution</h3>
-                <div className="space-y-3">
+              <div className="bg-gradient-to-br from-gray-50 to-white border-2 border-gray-100 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-lg">📊</span>
+                  <h3 className="font-bold text-gray-900 text-sm">Score Distribution</h3>
+                </div>
+                <div className="space-y-4">
+                  {/* Excellent */}
                   <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-gray-500">Excellent (80%+)</span>
-                      <span className="font-medium text-green-600">{excellentCount}</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
+                        <span className="text-sm text-gray-600">Excellent (80%+)</span>
+                      </div>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">{excellentCount}</span>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                      <div className="bg-green-500 h-2 rounded-full transition-all" style={{ width: `${attempts.length ? (excellentCount / attempts.length) * 100 : 0}%` }} />
+                    <div className="w-full bg-gray-100 rounded-full h-2.5">
+                      <div
+                        className="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full transition-all duration-500 shadow-sm"
+                        style={{ width: `${attempts.length ? (excellentCount / attempts.length) * 100 : 0}%` }}
+                      />
                     </div>
                   </div>
+                  {/* Good */}
                   <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-gray-500">Good (50-79%)</span>
-                      <span className="font-medium text-orange-500">{goodCount}</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-orange-400 inline-block" />
+                        <span className="text-sm text-gray-600">Good (50–79%)</span>
+                      </div>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">{goodCount}</span>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                      <div className="bg-orange-400 h-2 rounded-full transition-all" style={{ width: `${attempts.length ? (goodCount / attempts.length) * 100 : 0}%` }} />
+                    <div className="w-full bg-gray-100 rounded-full h-2.5">
+                      <div
+                        className="bg-gradient-to-r from-orange-400 to-amber-500 h-2.5 rounded-full transition-all duration-500 shadow-sm"
+                        style={{ width: `${attempts.length ? (goodCount / attempts.length) * 100 : 0}%` }}
+                      />
                     </div>
                   </div>
+                  {/* Needs Work */}
                   <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span className="text-gray-500">Needs Work (&lt;50%)</span>
-                      <span className="font-medium text-red-500">{needsWorkCount}</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-red-400 inline-block" />
+                        <span className="text-sm text-gray-600">Needs Work (&lt;50%)</span>
+                      </div>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700">{needsWorkCount}</span>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-2">
-                      <div className="bg-red-400 h-2 rounded-full transition-all" style={{ width: `${attempts.length ? (needsWorkCount / attempts.length) * 100 : 0}%` }} />
+                    <div className="w-full bg-gray-100 rounded-full h-2.5">
+                      <div
+                        className="bg-gradient-to-r from-red-400 to-rose-500 h-2.5 rounded-full transition-all duration-500 shadow-sm"
+                        style={{ width: `${attempts.length ? (needsWorkCount / attempts.length) * 100 : 0}%` }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -226,47 +265,53 @@ const StudentDashboard: React.FC = () => {
             )}
 
             {/* Quick Tips */}
-            <div className="bg-white border border-gray-200 rounded-lg p-5">
-              <h3 className="font-semibold text-gray-900 mb-3 text-sm">💡 Quick Tips</h3>
-              <ul className="space-y-3 text-sm text-gray-500">
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400 mt-0.5 shrink-0">●</span>
-                  <span>Ask your teacher for a <strong className="text-gray-700">Join Code</strong> to take a quiz.</span>
+            <div className="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-100 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-amber-200">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-lg animate-float-slow inline-block">💡</span>
+                <h3 className="font-bold text-gray-900 text-sm">Quick Tips</h3>
+              </div>
+              <ul className="space-y-3 text-sm text-gray-600">
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center text-base">🔑</span>
+                  <span>Ask your teacher for a <strong className="text-gray-800">Join Code</strong> to enter a quiz.</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400 mt-0.5 shrink-0">●</span>
-                  <span>Review your <strong className="text-gray-700">Results</strong> after each attempt to learn from mistakes.</span>
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-lg bg-blue-100 flex items-center justify-center text-base">📝</span>
+                  <span>Review your <strong className="text-gray-800">Results</strong> after each attempt to learn from mistakes.</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400 mt-0.5 shrink-0">●</span>
-                  <span>Aim for <strong className="text-gray-700">80%+</strong> to land in the Excellent category.</span>
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-lg bg-green-100 flex items-center justify-center text-base">🎯</span>
+                  <span>Aim for <strong className="text-gray-800">80%+</strong> to land in the Excellent category.</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-orange-400 mt-0.5 shrink-0">●</span>
-                  <span>Click any attempt to see <strong className="text-gray-700">detailed question-by-question</strong> breakdown.</span>
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-lg bg-purple-100 flex items-center justify-center text-base">📊</span>
+                  <span>Click any attempt for a <strong className="text-gray-800">question-by-question</strong> breakdown.</span>
                 </li>
               </ul>
             </div>
 
             {/* How It Works */}
-            <div className="bg-white border border-gray-200 rounded-lg p-5">
-              <h3 className="font-semibold text-gray-900 mb-3 text-sm">🚀 How It Works</h3>
-              <ol className="space-y-2.5 text-sm text-gray-600">
-                <li className="flex items-start gap-2.5">
-                  <span className="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span>
-                  <span>Get a join code from your teacher</span>
+            <div className="bg-gradient-to-br from-violet-50 to-white border-2 border-violet-100 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-violet-200">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-lg animate-float inline-block">🚀</span>
+                <h3 className="font-bold text-gray-900 text-sm">How It Works</h3>
+              </div>
+              <ol className="space-y-3 text-sm text-gray-600">
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 text-white flex items-center justify-center text-xs font-bold">1</span>
+                  <span>Get a <strong className="text-gray-800">join code</strong> from your teacher</span>
                 </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span>
-                  <span>Enter the code &amp; start the quiz</span>
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white flex items-center justify-center text-xs font-bold">2</span>
+                  <span>Enter the code &amp; <strong className="text-gray-800">start the quiz</strong></span>
                 </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span>
-                  <span>Answer all questions before time runs out</span>
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 text-white flex items-center justify-center text-xs font-bold">3</span>
+                  <span>Answer all questions <strong className="text-gray-800">before time runs out</strong></span>
                 </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="bg-orange-100 text-orange-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span>
-                  <span>View your score &amp; review answers</span>
+                <li className="flex items-start gap-3">
+                  <span className="shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-orange-500 to-amber-500 text-white flex items-center justify-center text-xs font-bold">4</span>
+                  <span>View your <strong className="text-gray-800">score &amp; review answers</strong></span>
                 </li>
               </ol>
             </div>
