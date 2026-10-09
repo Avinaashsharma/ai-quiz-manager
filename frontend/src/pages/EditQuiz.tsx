@@ -65,8 +65,19 @@ const EditQuiz: React.FC = () => {
     <div className="min-h-[calc(100vh-56px)] bg-orange-50">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Edit Quiz</h1>
-          <Link to="/teacher/quizzes" className="hidden sm:inline-block text-sm text-gray-500 hover:text-gray-700 transition-colors">← Back to Quizzes</Link>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-200 to-purple-200 flex items-center justify-center shadow-sm">
+              <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 012.828 2.828L11.828 15.828a4 4 0 01-1.414.94l-3.536.884.884-3.536A4 4 0 019 13z" /></svg>
+            </div>
+            <div>
+              <h1 className="text-2xl font-extrabold text-gray-900 leading-tight">Edit Quiz</h1>
+              <p className="text-xs text-gray-400 mt-0.5">Make changes and save when ready</p>
+            </div>
+          </div>
+          <Link to="/teacher/quizzes" className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-800 bg-white border border-gray-200 hover:border-gray-300 px-3 py-1.5 rounded-xl transition-all shadow-sm">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            Back to Quizzes
+          </Link>
         </div>
         <QuizForm formData={formData} setFormData={setFormData} onSubmit={handleSubmit} isSubmitting={isSubmitting} submitLabel="Save Changes" error={error} />
       </div>

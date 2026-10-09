@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
   return (
     <>
       {/* ── Top Navbar (unchanged on desktop, brand-only on mobile for logged-in users) ── */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200/60 sticky top-0 z-50 shadow-sm">
+      <nav className="bg-gradient-to-r from-orange-100 via-amber-50/50 to-white backdrop-blur-md border-b border-orange-200/40 sticky top-0 z-50 shadow-md">
         <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="flex items-center justify-between h-14">
             <Link to={user ? dashboardPath : '/'} className="flex items-center gap-2">

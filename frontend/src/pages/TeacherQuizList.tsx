@@ -91,17 +91,29 @@ const TeacherQuizList: React.FC = () => {
 
         {!isLoading && quizzes.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {quizzes.map((quiz, i) => (
-              <div key={quiz._id} className="bg-white border border-gray-200 rounded-lg p-5 flex flex-col justify-between hover:shadow-sm transition-shadow animate-[fadeInUp_0.5s_ease-out_both]" style={{ animationDelay: `${i * 80}ms` }}>
-                <div>
-                  <div className="flex items-start justify-between mb-2">
+            {quizzes.map((quiz, i) => {
+              const palettes = [
+                { bg: 'from-orange-50 to-amber-50', border: 'border-orange-200', accent: 'bg-gradient-to-r from-orange-400 to-amber-400', code: 'bg-orange-100 text-orange-700' },
+                { bg: 'from-blue-50 to-sky-50',    border: 'border-blue-200',   accent: 'bg-gradient-to-r from-blue-400 to-sky-400',   code: 'bg-blue-100 text-blue-700'   },
+                { bg: 'from-violet-50 to-purple-50', border: 'border-violet-200', accent: 'bg-gradient-to-r from-violet-400 to-purple-400', code: 'bg-violet-100 text-violet-700' },
+                { bg: 'from-emerald-50 to-teal-50', border: 'border-emerald-200', accent: 'bg-gradient-to-r from-emerald-400 to-teal-400', code: 'bg-emerald-100 text-emerald-700' },
+                { bg: 'from-rose-50 to-pink-50',   border: 'border-rose-200',   accent: 'bg-gradient-to-r from-rose-400 to-pink-400',   code: 'bg-rose-100 text-rose-700'   },
+                { bg: 'from-cyan-50 to-indigo-50', border: 'border-cyan-200',   accent: 'bg-gradient-to-r from-cyan-400 to-indigo-400', code: 'bg-cyan-100 text-cyan-700'   },
+              ];
+              const p = palettes[i % palettes.length];
+              return (
+              <div key={quiz._id} className={`relative bg-gradient-to-br ${p.bg} border ${p.border} rounded-2xl p-3 sm:p-5 flex flex-col justify-between hover:shadow-md transition-all duration-300 animate-[fadeInUp_0.5s_ease-out_both] overflow-hidden`} style={{ animationDelay: `${i * 80}ms` }}>
+                {/* Top accent bar */}
+                <div className={`absolute top-0 left-0 right-0 h-1 ${p.accent}`} />
+                <div className="mt-1">
+                  <div className="flex items-start justify-between mb-1.5 sm:mb-2">
                     <h3 className="font-semibold text-gray-900 leading-tight flex-1 mr-2">{quiz.title}</h3>
                     <span className={`text-xs px-2 py-0.5 rounded border font-medium shrink-0 ${statusBadge(quiz.status)}`}>{quiz.status}</span>
                   </div>
-                  {quiz.description && <p className="text-gray-500 text-sm mb-3 line-clamp-2">{quiz.description}</p>}
-                  <div className="flex items-center gap-3 text-sm text-gray-400 mb-4">
+                  {quiz.description && <p className="text-gray-500 text-sm mb-2 sm:mb-3 line-clamp-1 sm:line-clamp-2">{quiz.description}</p>}
+                  <div className="flex items-center gap-3 text-sm text-gray-400 mb-2 sm:mb-4">
                     <span>⏱ {quiz.duration} min</span>
-                    <span className="font-mono bg-gray-100 px-2 py-0.5 rounded text-gray-600">#{quiz.joinCode}</span>
+                    <span className={`font-mono text-xs px-2 py-0.5 rounded font-semibold ${p.code}`}>#{quiz.joinCode}</span>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-1.5 border-t border-gray-100 pt-3">
@@ -134,9 +146,15 @@ const TeacherQuizList: React.FC = () => {
                   </button>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
+        <div className="flex items-center gap-3 mt-10 pb-6">
+          <div className="flex-1 h-px bg-gray-200" />
+          <span className="text-xs font-medium text-gray-400">No more quizzes</span>
+          <div className="flex-1 h-px bg-gray-200" />
+        </div>
       </div>
     </div>
   );
