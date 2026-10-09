@@ -104,16 +104,33 @@ const TeacherQuizList: React.FC = () => {
                     <span className="font-mono bg-gray-100 px-2 py-0.5 rounded text-gray-600">#{quiz.joinCode}</span>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-2 border-t border-gray-100 pt-3">
-                  <Link to={`/teacher/quizzes/${quiz._id}/edit`} className="flex-1 text-center py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 bg-orange-50 hover:bg-gray-100 rounded transition-colors">Edit</Link>
-                  <Link to={`/teacher/quizzes/${quiz._id}/results`} className="flex-1 text-center py-1.5 text-sm font-medium text-orange-600 hover:text-orange-700 bg-orange-50 hover:bg-orange-100 rounded transition-colors">Results</Link>
-                  <Link to={`/teacher/quizzes/${quiz._id}/analytics`} className="flex-1 text-center py-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded transition-colors">Analytics</Link>
+                <div className="flex flex-wrap gap-1.5 border-t border-gray-100 pt-3">
+                  <Link to={`/teacher/quizzes/${quiz._id}/edit`}
+                    className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 px-2 text-xs font-semibold text-gray-600 hover:text-white bg-gray-100 hover:bg-gray-600 rounded-full transition-all duration-200">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 012.828 2.828L11.828 15.828a4 4 0 01-1.414.94l-3.536.884.884-3.536A4 4 0 019 13z" /></svg>
+                    Edit
+                  </Link>
+                  <Link to={`/teacher/quizzes/${quiz._id}/results`}
+                    className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 px-2 text-xs font-semibold text-orange-600 hover:text-white bg-orange-50 hover:bg-orange-500 rounded-full transition-all duration-200">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 17v-6m4 6v-4m4 4V9M5 20h14a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>
+                    Results
+                  </Link>
+                  <Link to={`/teacher/quizzes/${quiz._id}/analytics`}
+                    className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 px-2 text-xs font-semibold text-blue-600 hover:text-white bg-blue-50 hover:bg-blue-500 rounded-full transition-all duration-200">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path strokeLinecap="round" strokeLinejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
+                    Analytics
+                  </Link>
                   {quiz.status === 'active' && (
-                    <Link to={`/teacher/live/${quiz.joinCode}`} className="flex-1 text-center py-1.5 text-sm font-medium text-green-600 hover:text-green-700 bg-green-50 hover:bg-green-100 rounded transition-colors">Live</Link>
+                    <Link to={`/teacher/live/${quiz.joinCode}`}
+                      className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 px-2 text-xs font-semibold text-green-600 hover:text-white bg-green-50 hover:bg-green-500 rounded-full transition-all duration-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                      Live
+                    </Link>
                   )}
                   <button onClick={() => handleDelete(quiz._id)} disabled={deleteId === quiz._id}
-                    className="flex-1 py-1.5 text-sm font-medium text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded transition-colors disabled:opacity-50">
-                    {deleteId === quiz._id ? '...' : 'Delete'}
+                    className="flex-1 inline-flex items-center justify-center gap-1 py-1.5 px-2 text-xs font-semibold text-red-500 hover:text-white bg-red-50 hover:bg-red-500 rounded-full transition-all duration-200 disabled:opacity-50">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" /></svg>
+                    {deleteId === quiz._id ? '…' : 'Delete'}
                   </button>
                 </div>
               </div>

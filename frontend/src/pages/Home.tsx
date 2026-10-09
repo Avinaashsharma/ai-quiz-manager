@@ -101,11 +101,13 @@ const Home: React.FC = () => {
 
         {/* How It Works */}
         <div ref={howRef} className={`pb-24 pt-8 group ${revealStyle}`}>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">How It Works</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Get started in minutes. No setup, no complex configurations,  just create, share, and track.</p>
+          <div className="text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">How It Works</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Get started in minutes. No setup, no complex configurations — just create, share, and track.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+            {/* Connector line desktop */}
+            <div className="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-orange-200 via-orange-300 to-orange-200 z-0" />
             {[
               { step: '1', title: 'Create Account', desc: 'Sign up as a teacher or student in seconds. No credit card required.', icon: '👤' },
               { step: '2', title: 'Build Your Quiz', desc: 'Use AI to generate questions or create them manually. Mix and match as you like.', icon: '✏️' },
@@ -114,19 +116,25 @@ const Home: React.FC = () => {
             ].map((s, i) => (
               <div
                 key={s.step}
-                className={`relative bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-md transition-all duration-700 ease-out opacity-0 ${i < 2 ? '-translate-x-12' : 'translate-x-12'} group-[.revealed]:opacity-100 group-[.revealed]:translate-x-0`}
+                className={`relative z-10 bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out opacity-0 ${i < 2 ? '-translate-x-12' : 'translate-x-12'} group-[.revealed]:opacity-100 group-[.revealed]:translate-x-0 group-[.revealed]:translate-y-0`}
                 style={{ transitionDelay: `${i * 150}ms` }}
               >
-                <div className="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                {/* Orange top accent bar */}
+                <div className="absolute top-0 left-6 right-6 h-0.5 bg-gradient-to-r from-transparent via-orange-400 to-transparent rounded-full" />
+                {/* Watermark step number */}
+                <div className="absolute top-3 right-4 text-5xl font-black text-orange-50 leading-none select-none">{s.step}</div>
+                {/* Icon */}
+                <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-sm">
                   {s.icon}
                 </div>
-                <span className="absolute top-4 right-4 text-xs font-bold text-orange-400">Step {s.step}</span>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{s.title}</h3>
+                <span className="inline-block text-[10px] font-bold text-orange-500 uppercase tracking-widest mb-2">Step {s.step}</span>
+                <h3 className="text-base font-bold text-gray-900 mb-2 leading-snug">{s.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
+
 
         {/* Stats */}
         <div ref={statsRef} className={`pb-24 ${revealStyle}`}>
@@ -148,30 +156,46 @@ const Home: React.FC = () => {
         </div>
 
         {/* What People Say */}
-        <div ref={testimonialsRef} className={`pb-24 group ${revealStyle}`}>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Loved by Educators</h2>
+        <div ref={testimonialsRef} className={`pb-16 group ${revealStyle}`}>
+          <div className="text-center mb-10">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">Loved by Educators</h2>
             <p className="text-gray-500 max-w-xl mx-auto">Teachers and students are already using AI Quiz Manager to make learning more engaging.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: 'Priya Sharma', role: 'High School Teacher', quote: 'The AI generation saves me hours every week. I can create a full quiz in under a minute!', avatar: '👩‍🏫' },
-              { name: 'Rahul Verma', role: 'College Professor', quote: 'Live quiz mode makes my lectures so much more interactive. Students actually look forward to assessments now.', avatar: '👨‍🏫' },
-              { name: 'Ananya Gupta', role: 'Student', quote: 'I love competing on the leaderboard. It makes studying feel like a game instead of a chore.', avatar: '👩‍🎓' },
+              { name: 'Priya Das', role: 'High School Teacher', quote: 'The AI generation saves me hours every week. I can create a full quiz in under a minute!', avatar: '👩‍🏫', stars: 5 },
+              { name: 'Rahul Verma', role: 'College Professor', quote: 'Live quiz mode makes my lectures so much more interactive. Students actually look forward to assessments now.', avatar: '👨‍🏫', stars: 5 },
+              { name: 'Ananya Kumar', role: 'Student', quote: 'I love competing on the leaderboard. It makes studying feel like a game instead of a chore.', avatar: '👩‍🎓', stars: 5 },
             ].map((t, i) => {
               const dir = i === 0 ? '-translate-x-12' : i === 2 ? 'translate-x-12' : 'translate-y-8';
               return (
                 <div
                   key={t.name}
-                  className={`bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-700 ease-out opacity-0 ${dir} group-[.revealed]:opacity-100 group-[.revealed]:translate-x-0 group-[.revealed]:translate-y-0`}
+                  className={`relative bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500 ease-out opacity-0 ${dir} group-[.revealed]:opacity-100 group-[.revealed]:translate-x-0 group-[.revealed]:translate-y-0`}
                   style={{ transitionDelay: `${i * 150}ms` }}
                 >
-                  <p className="text-gray-600 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-lg">{t.avatar}</div>
+                  {/* Orange top accent */}
+                  <div className="absolute top-0 left-6 right-6 h-0.5 bg-gradient-to-r from-transparent via-orange-400 to-transparent rounded-full" />
+
+                  {/* Watermark quote mark */}
+                  <div className="absolute top-3 right-4 text-4xl font-serif text-orange-200/60 leading-none select-none pointer-events-none">”</div>
+
+                  {/* Stars */}
+                  <div className="flex gap-0.5 mb-2">
+                    {Array.from({ length: t.stars }).map((_, si) => (
+                      <svg key={si} className="w-3.5 h-3.5 text-orange-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-3.5">{t.quote}</p>
+
+                  {/* Author */}
+                  <div className="flex items-center gap-2.5 pt-3 border-t border-gray-100">
+                    <div className="w-9 h-9 bg-gradient-to-br from-orange-100 to-amber-50 rounded-full flex items-center justify-center text-lg shadow-sm shrink-0">{t.avatar}</div>
                     <div>
-                      <div className="text-sm font-bold text-gray-900">{t.name}</div>
-                      <div className="text-xs text-gray-400">{t.role}</div>
+                      <div className="text-sm font-bold text-gray-900 leading-tight">{t.name}</div>
+                      <div className="text-[11px] text-orange-500 font-semibold leading-tight mt-0.5">{t.role}</div>
                     </div>
                   </div>
                 </div>
@@ -179,6 +203,7 @@ const Home: React.FC = () => {
             })}
           </div>
         </div>
+
 
         {/* CTA */}
         <div ref={ctaRef} className={`pb-24 ${revealStyle}`}>

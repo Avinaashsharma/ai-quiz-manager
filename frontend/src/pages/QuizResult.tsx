@@ -53,33 +53,59 @@ const QuizResult: React.FC = () => {
     </div>
   );
 
-  const scoreColor = attempt.percentage >= 80 ? 'text-green-600' : attempt.percentage >= 50 ? 'text-orange-500' : 'text-red-500';
+  const pct = attempt.percentage;
+  const scoreColor = pct >= 80 ? 'text-green-600' : pct >= 50 ? 'text-orange-500' : 'text-red-500';
+  const ringColor  = pct >= 80 ? 'border-green-400' : pct >= 50 ? 'border-orange-400' : 'border-red-400';
+  const badge = pct >= 80
+    ? { emoji: '🏆', label: 'Excellent!', bg: 'bg-green-100 text-green-700' }
+    : pct >= 50
+    ? { emoji: '👍', label: 'Good Job!', bg: 'bg-orange-100 text-orange-700' }
+    : { emoji: '📚', label: 'Keep Practicing', bg: 'bg-red-100 text-red-600' };
+  const cardGradient = pct >= 80
+    ? 'from-green-50 via-emerald-50 to-white'
+    : pct >= 50
+    ? 'from-orange-50 via-amber-50 to-white'
+    : 'from-red-50 via-rose-50 to-white';
+  const ringFill = pct >= 80 ? 'bg-green-50' : pct >= 50 ? 'bg-orange-50' : 'bg-red-50';
 
   return (
     <div className="min-h-[calc(100vh-56px)] bg-orange-50">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
         {/* Score Card */}
-        <div className="bg-white border border-gray-200 rounded-lg p-8 text-center mb-6">
+        <div className={`bg-gradient-to-b ${cardGradient} border border-gray-100 rounded-2xl p-6 text-center mb-6 shadow-sm`}>
+          {/* Title */}
           <h1 className="text-xl font-bold text-gray-900 mb-1">{attempt.quiz.title}</h1>
-          <p className="text-gray-400 text-sm mb-6">Quiz Completed</p>
-          <div className={`text-6xl font-bold mb-4 ${scoreColor}`}>{attempt.percentage}%</div>
-          <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6">
+          <p className="text-gray-400 text-sm mb-4">Quiz Completed</p>
+
+          {/* Score Ring */}
+          <div className="flex flex-col items-center gap-2 mb-4">
+            <div className={`w-28 h-28 rounded-full border-[6px] ${ringColor} ${ringFill} flex flex-col items-center justify-center shadow-inner`}>
+              <span className={`text-3xl font-extrabold ${scoreColor}`}>{pct}%</span>
+              <span className="text-gray-400 text-xs font-medium mt-0.5">{attempt.score}/{attempt.totalQuestions}</span>
+            </div>
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${badge.bg}`}>
+              {badge.emoji} {badge.label}
+            </span>
+          </div>
+
+          {/* Stat Cards */}
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-sm mx-auto">
             {[
-              { value: attempt.correctAnswers, label: 'Correct', emoji: '✓', bar: 'bg-green-500', ring: 'bg-green-50 text-green-600' },
-              { value: attempt.wrongAnswers, label: 'Wrong', emoji: '✗', bar: 'bg-red-500', ring: 'bg-red-50 text-red-500' },
-              { value: attempt.totalQuestions, label: 'Total', emoji: '∑', bar: 'bg-orange-500', ring: 'bg-orange-50 text-orange-600' },
-            ].map((card) => (
-              <div key={card.label} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100">
-                <div className={`h-1 ${card.bar}`} />
-                <div className="p-2.5 sm:p-3 flex flex-col items-center gap-1">
-                  <span className={`w-7 h-7 rounded-full ${card.ring} flex items-center justify-center text-xs font-bold`}>{card.emoji}</span>
-                  <p className="text-xl font-bold text-gray-900">{card.value}</p>
-                  <p className="text-gray-400 text-[10px] font-medium uppercase tracking-wide">{card.label}</p>
-                </div>
+              { value: attempt.correctAnswers, label: 'Correct', color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
+              { value: attempt.wrongAnswers,   label: 'Wrong',   color: 'text-red-500',   bg: 'bg-red-50',   border: 'border-red-100'   },
+              { value: attempt.totalQuestions, label: 'Total',   color: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-100' },
+            ].map((s) => (
+              <div key={s.label} className={`${s.bg} ${s.border} border rounded-xl py-3 px-2`}>
+                <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
+                <p className="text-gray-400 text-[11px] font-medium uppercase tracking-wide mt-0.5">{s.label}</p>
               </div>
             ))}
           </div>
-          <p className="text-gray-400 text-sm mt-4">Submitted {new Date(attempt.submittedAt).toLocaleString()}</p>
+
+          <p className="text-gray-500 text-xs mt-5">
+            Submitted on {new Date(attempt.submittedAt).toLocaleString()}
+          </p>
         </div>
 
         {leaderboard.length > 0 && <div className="mb-6"><LiveLeaderboard leaderboard={leaderboard} currentUserId={user?._id} /></div>}
