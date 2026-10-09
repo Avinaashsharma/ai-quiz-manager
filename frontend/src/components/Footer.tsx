@@ -24,8 +24,8 @@ const Footer: React.FC<FooterProps> = ({ className = 'mt-12' }) => {
             <ul className="space-y-2 text-sm text-gray-200">
               <li><Link to="/register" className="hover:text-orange-400 transition-colors">Get Started</Link></li>
               <li><Link to="/login" className="hover:text-orange-400 transition-colors">Sign In</Link></li>
-              <li><span>AI Quiz Generation</span></li>
-              <li><span>Live Quizzes</span></li>
+              <li><Link to="/teacher/quizzes/create" className="hover:text-orange-400 transition-colors">AI Quiz Generation</Link></li>
+              <li><Link to="/teacher/quizzes" className="hover:text-orange-400 transition-colors">Live Quizzes</Link></li>
             </ul>
           </div>
 
@@ -33,10 +33,10 @@ const Footer: React.FC<FooterProps> = ({ className = 'mt-12' }) => {
           <div>
             <h4 className="text-white text-sm font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-sm text-gray-200">
-              <li><span>Documentation</span></li>
-              <li><span>Help Center</span></li>
-              <li><span>API Reference</span></li>
-              <li><span>Release Notes</span></li>
+              <li><Link to="/info/documentation" className="hover:text-orange-400 transition-colors">Documentation</Link></li>
+              <li><Link to="/info/help-center" className="hover:text-orange-400 transition-colors">Help Center</Link></li>
+              <li><Link to="/info/api-reference" className="hover:text-orange-400 transition-colors">API Reference</Link></li>
+              <li><Link to="/info/release-notes" className="hover:text-orange-400 transition-colors">Release Notes</Link></li>
             </ul>
           </div>
 
@@ -44,10 +44,10 @@ const Footer: React.FC<FooterProps> = ({ className = 'mt-12' }) => {
           <div>
             <h4 className="text-white text-sm font-semibold mb-4">Company</h4>
             <ul className="space-y-2 text-sm text-gray-200">
-              <li><span>About Us</span></li>
-              <li><span>Privacy Policy</span></li>
-              <li><span>Terms of Service</span></li>
-              <li><span>Contact</span></li>
+              <li><Link to="/info/about-us" className="hover:text-orange-400 transition-colors">About Us</Link></li>
+              <li><Link to="/info/privacy-policy" className="hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/info/terms-of-service" className="hover:text-orange-400 transition-colors">Terms of Service</Link></li>
+              <li><Link to="/info/contact" className="hover:text-orange-400 transition-colors">Contact</Link></li>
             </ul>
           </div>
         </div>

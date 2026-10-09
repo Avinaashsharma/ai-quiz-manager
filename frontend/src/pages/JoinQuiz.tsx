@@ -120,7 +120,7 @@ const JoinQuiz: React.FC = () => {
 
       <div className="w-full max-w-lg relative z-10">
         {/* Main Card */}
-        <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-8 shadow-sm relative overflow-hidden">
+        <div className="bg-white border border-gray-200 rounded-xl p-5 sm:p-8 shadow-sm relative overflow-hidden animate-[fadeInUp_0.6s_ease-out_both]">
           {/* Decorative accent */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-400" />
 
@@ -165,24 +165,18 @@ const JoinQuiz: React.FC = () => {
 
         {/* How it works */}
         <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-2 sm:gap-3">
-          <div className="bg-white border border-gray-200 rounded-xl p-4 text-center">
-            <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mx-auto mb-2">
-              <span className="text-sm font-bold text-orange-500">1</span>
+          {[
+            { step: '1', text: 'Enter the code' },
+            { step: '2', text: 'Wait for teacher' },
+            { step: '3', text: 'Start the quiz!' },
+          ].map((s, i) => (
+            <div key={s.step} className="bg-white border border-gray-200 rounded-xl p-4 text-center animate-[fadeInUp_0.5s_ease-out_both]" style={{ animationDelay: `${400 + i * 120}ms` }}>
+              <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mx-auto mb-2">
+                <span className="text-sm font-bold text-orange-500">{s.step}</span>
+              </div>
+              <p className="text-xs text-gray-500 font-semibold">{s.text}</p>
             </div>
-            <p className="text-xs text-gray-500 font-medium">Enter the code</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-xl p-4 text-center">
-            <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mx-auto mb-2">
-              <span className="text-sm font-bold text-orange-500">2</span>
-            </div>
-            <p className="text-xs text-gray-500 font-medium">Wait for teacher</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-xl p-4 text-center">
-            <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mx-auto mb-2">
-              <span className="text-sm font-bold text-orange-500">3</span>
-            </div>
-            <p className="text-xs text-gray-500 font-medium">Start the quiz!</p>
-          </div>
+          ))}
         </div>
       </div>
     </div>

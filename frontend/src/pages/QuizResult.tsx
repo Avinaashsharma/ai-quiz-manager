@@ -63,19 +63,21 @@ const QuizResult: React.FC = () => {
           <h1 className="text-xl font-bold text-gray-900 mb-1">{attempt.quiz.title}</h1>
           <p className="text-gray-400 text-sm mb-6">Quiz Completed</p>
           <div className={`text-6xl font-bold mb-4 ${scoreColor}`}>{attempt.percentage}%</div>
-          <div className="grid grid-cols-3 gap-4 mt-6">
-            <div className="bg-green-50 rounded-lg p-3">
-              <p className="text-green-600 text-2xl font-bold">{attempt.correctAnswers}</p>
-              <p className="text-gray-500 text-xs">Correct</p>
-            </div>
-            <div className="bg-red-50 rounded-lg p-3">
-              <p className="text-red-500 text-2xl font-bold">{attempt.wrongAnswers}</p>
-              <p className="text-gray-500 text-xs">Wrong</p>
-            </div>
-            <div className="bg-orange-50 rounded-lg p-3">
-              <p className="text-gray-700 text-2xl font-bold">{attempt.totalQuestions}</p>
-              <p className="text-gray-500 text-xs">Total</p>
-            </div>
+          <div className="grid grid-cols-3 gap-3 sm:gap-4 mt-6">
+            {[
+              { value: attempt.correctAnswers, label: 'Correct', emoji: '✓', bar: 'bg-green-500', ring: 'bg-green-50 text-green-600' },
+              { value: attempt.wrongAnswers, label: 'Wrong', emoji: '✗', bar: 'bg-red-500', ring: 'bg-red-50 text-red-500' },
+              { value: attempt.totalQuestions, label: 'Total', emoji: '∑', bar: 'bg-orange-500', ring: 'bg-orange-50 text-orange-600' },
+            ].map((card) => (
+              <div key={card.label} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100">
+                <div className={`h-1 ${card.bar}`} />
+                <div className="p-2.5 sm:p-3 flex flex-col items-center gap-1">
+                  <span className={`w-7 h-7 rounded-full ${card.ring} flex items-center justify-center text-xs font-bold`}>{card.emoji}</span>
+                  <p className="text-xl font-bold text-gray-900">{card.value}</p>
+                  <p className="text-gray-400 text-[10px] font-medium uppercase tracking-wide">{card.label}</p>
+                </div>
+              </div>
+            ))}
           </div>
           <p className="text-gray-400 text-sm mt-4">Submitted {new Date(attempt.submittedAt).toLocaleString()}</p>
         </div>

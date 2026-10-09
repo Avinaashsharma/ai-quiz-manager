@@ -19,6 +19,7 @@ import VerifyOtp from '../pages/VerifyOtp';
 import NotFound from '../pages/NotFound';
 import Profile from '../pages/Profile';
 import ProtectedRoute from '../components/ProtectedRoute';
+import InfoPage from '../pages/InfoPage';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -27,6 +28,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/verify-otp" element={<VerifyOtp />} />
+      <Route path="/info/:slug" element={<InfoPage />} />
 
       {/* Teacher Routes */}
       <Route

@@ -94,22 +94,36 @@ const StudentDashboard: React.FC = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">📝 Quizzes Taken</p>
-            <p className="text-3xl font-bold text-gray-900">{attempts.length}</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">📊 Avg. Score</p>
-            <p className={`text-3xl font-bold ${avgScore >= 80 ? 'text-green-600' : avgScore >= 50 ? 'text-orange-500' : 'text-gray-900'}`}>{avgScore}%</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">🏆 Best Score</p>
-            <p className="text-3xl font-bold text-green-600">{bestScore}%</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">❓ Questions Answered</p>
-            <p className="text-3xl font-bold text-gray-900">{totalQuestionsAnswered}</p>
-          </div>
+          {[
+            { emoji: '📝', label: 'Quizzes Taken', value: attempts.length, color: 'orange' },
+            { emoji: '📊', label: 'Avg. Score', value: `${avgScore}%`, color: avgScore >= 80 ? 'green' : avgScore >= 50 ? 'amber' : 'gray' },
+            { emoji: '🏆', label: 'Best Score', value: `${bestScore}%`, color: 'green' },
+            { emoji: '❓', label: 'Questions Answered', value: totalQuestionsAnswered, color: 'purple' },
+          ].map((card) => {
+            const accents: Record<string, { border: string; bg: string; iconBg: string; text: string }> = {
+              orange: { border: 'border-orange-200', bg: 'from-orange-50/80 to-white', iconBg: 'bg-gradient-to-br from-orange-100 to-orange-200/60', text: 'text-orange-600' },
+              green:  { border: 'border-green-200',  bg: 'from-green-50/80 to-white',  iconBg: 'bg-gradient-to-br from-green-100 to-green-200/60',  text: 'text-green-600' },
+              amber:  { border: 'border-amber-200',  bg: 'from-amber-50/80 to-white',  iconBg: 'bg-gradient-to-br from-amber-100 to-amber-200/60',  text: 'text-amber-600' },
+              purple: { border: 'border-purple-200', bg: 'from-purple-50/80 to-white', iconBg: 'bg-gradient-to-br from-purple-100 to-purple-200/60', text: 'text-purple-600' },
+              gray:   { border: 'border-gray-200',   bg: 'from-gray-50/80 to-white',   iconBg: 'bg-gradient-to-br from-gray-100 to-gray-200/60',   text: 'text-gray-700' },
+            };
+            const a = accents[card.color];
+            return (
+              <div
+                key={card.label}
+                className={`relative overflow-hidden bg-gradient-to-br ${a.bg} border ${a.border} rounded-2xl p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200`}
+              >
+                <div className={`absolute -top-6 -right-6 w-16 h-16 rounded-full ${a.iconBg} opacity-40 blur-lg`} />
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className={`w-10 h-10 rounded-xl ${a.iconBg} flex items-center justify-center text-lg shadow-sm`}>{card.emoji}</span>
+                    <p className="text-sm font-medium text-gray-500">{card.label}</p>
+                  </div>
+                  <p className={`text-3xl font-bold ${a.text}`}>{card.value}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Main Content: 2-column layout */}

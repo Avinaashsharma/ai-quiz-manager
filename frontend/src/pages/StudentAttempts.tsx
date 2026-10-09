@@ -136,29 +136,24 @@ const StudentAttempts: React.FC = () => {
         </div>
 
         {/* Stats bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">📝 Total Attempts</p>
-            <p className="text-3xl font-bold text-gray-900">{totalAttempts}</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">📊 Avg. Score</p>
-            <p
-              className={`text-3xl font-bold ${
-                avgScore >= 80 ? 'text-green-600' : avgScore >= 50 ? 'text-orange-500' : 'text-gray-900'
-              }`}
-            >
-              {avgScore}%
-            </p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">🏆 Best Score</p>
-            <p className="text-3xl font-bold text-green-600">{bestScore}%</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <p className="text-sm text-gray-500 mb-1">✅ Passed Quizzes</p>
-            <p className="text-3xl font-bold text-gray-900">{passedCount}</p>
-          </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 mb-8">
+          {[
+            { emoji: '📝', label: 'Total Attempts', value: totalAttempts, accent: 'bg-orange-500', text: 'text-orange-600' },
+            { emoji: '📊', label: 'Avg. Score', value: `${avgScore}%`, accent: avgScore >= 80 ? 'bg-green-500' : avgScore >= 50 ? 'bg-amber-500' : 'bg-gray-400', text: avgScore >= 80 ? 'text-green-600' : avgScore >= 50 ? 'text-amber-600' : 'text-gray-600' },
+            { emoji: '🏆', label: 'Best Score', value: `${bestScore}%`, accent: 'bg-green-500', text: 'text-green-600' },
+            { emoji: '✅', label: 'Passed', value: passedCount, accent: 'bg-purple-500', text: 'text-purple-600' },
+          ].map((card) => (
+            <div key={card.label} className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 flex">
+              <div className={`w-1 sm:w-1.5 ${card.accent} shrink-0`} />
+              <div className="p-2.5 sm:p-3.5 flex-1">
+                <div className="flex items-center justify-between mb-1 sm:mb-2">
+                  <span className="text-sm sm:text-lg">{card.emoji}</span>
+                  <span className="text-[8px] sm:text-[10px] font-semibold text-gray-400 uppercase tracking-wider">{card.label}</span>
+                </div>
+                <p className={`text-xl sm:text-2xl font-extrabold ${card.text}`}>{card.value}</p>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Filters and Search */}

@@ -80,34 +80,36 @@ const TeacherDashboard: React.FC = () => {
 
         {/* Stats */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="w-9 h-9 rounded-lg bg-orange-100 flex items-center justify-center text-lg">📝</span>
-              <p className="text-sm text-gray-500">Total Quizzes</p>
-            </div>
-            <p className="text-3xl font-bold text-gray-900">{isLoading ? '...' : quizzes.length}</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="w-9 h-9 rounded-lg bg-green-100 flex items-center justify-center text-lg">✅</span>
-              <p className="text-sm text-gray-500">Active</p>
-            </div>
-            <p className="text-3xl font-bold text-green-600">{isLoading ? '...' : activeCount}</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="w-9 h-9 rounded-lg bg-yellow-100 flex items-center justify-center text-lg">📋</span>
-              <p className="text-sm text-gray-500">Drafts</p>
-            </div>
-            <p className="text-3xl font-bold text-orange-500">{isLoading ? '...' : draftCount}</p>
-          </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="w-9 h-9 rounded-lg bg-purple-100 flex items-center justify-center text-lg">❓</span>
-              <p className="text-sm text-gray-500">Total Questions</p>
-            </div>
-            <p className="text-3xl font-bold text-purple-600">{isLoading ? '...' : totalQuestions}</p>
-          </div>
+          {[
+            { emoji: '📝', label: 'Total Quizzes', value: isLoading ? '...' : quizzes.length, color: 'orange' },
+            { emoji: '✅', label: 'Active', value: isLoading ? '...' : activeCount, color: 'green' },
+            { emoji: '📋', label: 'Drafts', value: isLoading ? '...' : draftCount, color: 'amber' },
+            { emoji: '❓', label: 'Total Questions', value: isLoading ? '...' : totalQuestions, color: 'purple' },
+          ].map((card) => {
+            const accents: Record<string, { border: string; bg: string; iconBg: string; text: string }> = {
+              orange: { border: 'border-orange-200', bg: 'from-orange-50/80 to-white', iconBg: 'bg-gradient-to-br from-orange-100 to-orange-200/60', text: 'text-orange-600' },
+              green:  { border: 'border-green-200',  bg: 'from-green-50/80 to-white',  iconBg: 'bg-gradient-to-br from-green-100 to-green-200/60',  text: 'text-green-600' },
+              amber:  { border: 'border-amber-200',  bg: 'from-amber-50/80 to-white',  iconBg: 'bg-gradient-to-br from-amber-100 to-amber-200/60',  text: 'text-amber-600' },
+              purple: { border: 'border-purple-200', bg: 'from-purple-50/80 to-white', iconBg: 'bg-gradient-to-br from-purple-100 to-purple-200/60', text: 'text-purple-600' },
+            };
+            const a = accents[card.color];
+            return (
+              <div
+                key={card.label}
+                className={`relative overflow-hidden bg-gradient-to-br ${a.bg} border ${a.border} rounded-2xl p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200`}
+              >
+                {/* Decorative corner glow */}
+                <div className={`absolute -top-6 -right-6 w-16 h-16 rounded-full ${a.iconBg} opacity-40 blur-lg`} />
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className={`w-10 h-10 rounded-xl ${a.iconBg} flex items-center justify-center text-lg shadow-sm`}>{card.emoji}</span>
+                    <p className="text-sm font-medium text-gray-500">{card.label}</p>
+                  </div>
+                  <p className={`text-3xl font-bold ${a.text}`}>{card.value}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {/* Quick Actions */}
@@ -118,14 +120,14 @@ const TeacherDashboard: React.FC = () => {
           <div className="flex gap-2 sm:gap-3 justify-center items-center flex-nowrap">
             <Link
               to="/teacher/quizzes/create"
-              className="px-3.5 sm:px-6 py-2 sm:py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors text-xs sm:text-base whitespace-nowrap"
+              className="px-5 sm:px-6 py-2.5 sm:py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition-colors text-sm sm:text-base whitespace-nowrap"
             >
               + Create Quiz
             </Link>
             {quizzes.length > 0 && (
               <Link
                 to="/teacher/quizzes"
-                className="px-3.5 sm:px-6 py-2 sm:py-2.5 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors text-xs sm:text-base whitespace-nowrap"
+                className="px-5 sm:px-6 py-2.5 sm:py-2.5 bg-white hover:bg-orange-50 text-gray-700 border border-gray-300 rounded-lg font-semibold transition-colors text-sm sm:text-base whitespace-nowrap"
               >
                 View All Quizzes
               </Link>

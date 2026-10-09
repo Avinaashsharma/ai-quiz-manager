@@ -64,22 +64,21 @@ const TeacherQuizResults: React.FC = () => {
         {/* Stats */}
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-gray-900">{stats.totalAttempts}</p>
-              <p className="text-gray-500 text-xs">Submissions</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-orange-500">{stats.avgScore}%</p>
-              <p className="text-gray-500 text-xs">Average</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-green-600">{stats.highestScore}%</p>
-              <p className="text-gray-500 text-xs">Highest</p>
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-4 text-center">
-              <p className="text-2xl font-bold text-red-500">{stats.lowestScore}%</p>
-              <p className="text-gray-500 text-xs">Lowest</p>
-            </div>
+            {[
+              { value: stats.totalAttempts, label: 'Submissions', emoji: '👥', bar: 'bg-purple-500', ring: 'bg-purple-50 text-purple-600' },
+              { value: `${stats.avgScore}%`, label: 'Average', emoji: '📊', bar: 'bg-orange-500', ring: 'bg-orange-50 text-orange-600' },
+              { value: `${stats.highestScore}%`, label: 'Highest', emoji: '🏆', bar: 'bg-green-500', ring: 'bg-green-50 text-green-600' },
+              { value: `${stats.lowestScore}%`, label: 'Lowest', emoji: '📉', bar: 'bg-red-500', ring: 'bg-red-50 text-red-500' },
+            ].map((card) => (
+              <div key={card.label} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100">
+                <div className={`h-1 ${card.bar}`} />
+                <div className="p-3 flex flex-col items-center gap-1">
+                  <span className={`w-7 h-7 rounded-full ${card.ring} flex items-center justify-center text-sm`}>{card.emoji}</span>
+                  <p className="text-xl font-bold text-gray-900">{card.value}</p>
+                  <p className="text-gray-400 text-[10px] font-medium uppercase tracking-wide">{card.label}</p>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 

@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import HeroWaveBackground from '../components/HeroWaveBackground';
 import Footer from '../components/Footer';
 
+/** Fade-up on scroll into view. Pure Intersection Observer, no deps. */
+const useScrollReveal = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { el.classList.add('revealed'); observer.unobserve(el); } },
+      { threshold: 0.15 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+};
+
+const revealStyle = 'opacity-0 translate-y-8 transition-all duration-700 ease-out [&.revealed]:opacity-100 [&.revealed]:translate-y-0';
+
 const Home: React.FC = () => {
+  const featuresRef = useScrollReveal();
+  const howRef = useScrollReveal();
+  const statsRef = useScrollReveal();
+  const testimonialsRef = useScrollReveal();
+  const ctaRef = useScrollReveal();
+
   return (
     <div className="min-h-[calc(100vh-56px)]">
       {/* Hero Section with Full-Width Dynamic Fluid Wave Background */}
@@ -44,7 +68,7 @@ const Home: React.FC = () => {
 
       <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative">
         {/* Features */}
-        <div className="pb-24 pt-8 sm:pt-12">
+        <div ref={featuresRef} className={`pb-24 pt-8 sm:pt-12 ${revealStyle}`}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 lg:gap-x-16 xl:gap-x-20 gap-y-12">
             {[
               {
@@ -62,8 +86,8 @@ const Home: React.FC = () => {
                 title: 'Analytics',
                 desc: 'Track scores, view question-wise accuracy, and understand student performance at a glance.',
               },
-            ].map((f) => (
-              <div key={f.num} className="group">
+            ].map((f, i) => (
+              <div key={f.num} className="group" style={{ transitionDelay: `${i * 120}ms` }}>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 leading-snug">
                   {f.title}
                 </h3>
@@ -76,7 +100,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* How It Works */}
-        <div className="pb-24 pt-8">
+        <div ref={howRef} className={`pb-24 pt-8 group ${revealStyle}`}>
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">How It Works</h2>
             <p className="text-gray-500 max-w-xl mx-auto">Get started in minutes. No setup, no complex configurations,  just create, share, and track.</p>
@@ -87,8 +111,12 @@ const Home: React.FC = () => {
               { step: '2', title: 'Build Your Quiz', desc: 'Use AI to generate questions or create them manually. Mix and match as you like.', icon: '✏️' },
               { step: '3', title: 'Share & Go Live', desc: 'Share a join code with students. Go live for real-time competition.', icon: '🚀' },
               { step: '4', title: 'Track Results', desc: 'View detailed analytics, leaderboards, and per-question breakdowns instantly.', icon: '📊' },
-            ].map((s) => (
-              <div key={s.step} className="relative bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-md transition-shadow">
+            ].map((s, i) => (
+              <div
+                key={s.step}
+                className={`relative bg-white border border-gray-200 rounded-xl p-6 text-center hover:shadow-md transition-all duration-700 ease-out opacity-0 ${i < 2 ? '-translate-x-12' : 'translate-x-12'} group-[.revealed]:opacity-100 group-[.revealed]:translate-x-0`}
+                style={{ transitionDelay: `${i * 150}ms` }}
+              >
                 <div className="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
                   {s.icon}
                 </div>
@@ -101,7 +129,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* Stats */}
-        <div className="pb-24">
+        <div ref={statsRef} className={`pb-24 ${revealStyle}`}>
           <div className="py-6 sm:py-10">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-8 text-center">
               {[
@@ -120,7 +148,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* What People Say */}
-        <div className="pb-24">
+        <div ref={testimonialsRef} className={`pb-24 group ${revealStyle}`}>
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Loved by Educators</h2>
             <p className="text-gray-500 max-w-xl mx-auto">Teachers and students are already using AI Quiz Manager to make learning more engaging.</p>
@@ -130,23 +158,30 @@ const Home: React.FC = () => {
               { name: 'Priya Sharma', role: 'High School Teacher', quote: 'The AI generation saves me hours every week. I can create a full quiz in under a minute!', avatar: '👩‍🏫' },
               { name: 'Rahul Verma', role: 'College Professor', quote: 'Live quiz mode makes my lectures so much more interactive. Students actually look forward to assessments now.', avatar: '👨‍🏫' },
               { name: 'Ananya Gupta', role: 'Student', quote: 'I love competing on the leaderboard. It makes studying feel like a game instead of a chore.', avatar: '👩‍🎓' },
-            ].map((t) => (
-              <div key={t.name} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow">
-                <p className="text-gray-600 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-lg">{t.avatar}</div>
-                  <div>
-                    <div className="text-sm font-bold text-gray-900">{t.name}</div>
-                    <div className="text-xs text-gray-400">{t.role}</div>
+            ].map((t, i) => {
+              const dir = i === 0 ? '-translate-x-12' : i === 2 ? 'translate-x-12' : 'translate-y-8';
+              return (
+                <div
+                  key={t.name}
+                  className={`bg-white border border-gray-200 rounded-xl p-6 hover:shadow-md transition-all duration-700 ease-out opacity-0 ${dir} group-[.revealed]:opacity-100 group-[.revealed]:translate-x-0 group-[.revealed]:translate-y-0`}
+                  style={{ transitionDelay: `${i * 150}ms` }}
+                >
+                  <p className="text-gray-600 text-sm leading-relaxed mb-6 italic">"{t.quote}"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-orange-50 rounded-full flex items-center justify-center text-lg">{t.avatar}</div>
+                    <div>
+                      <div className="text-sm font-bold text-gray-900">{t.name}</div>
+                      <div className="text-xs text-gray-400">{t.role}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
         {/* CTA */}
-        <div className="pb-24">
+        <div ref={ctaRef} className={`pb-24 ${revealStyle}`}>
           <div className="text-center py-6 sm:py-10">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Ready to Transform Your Classroom?</h2>
             <p className="text-gray-600 max-w-lg mx-auto mb-8">Join thousands of educators who are making assessments smarter, faster, and more fun with AI Quiz Manager.</p>
@@ -175,3 +210,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+

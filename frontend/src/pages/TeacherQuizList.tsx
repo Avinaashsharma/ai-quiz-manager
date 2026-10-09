@@ -64,7 +64,7 @@ const TeacherQuizList: React.FC = () => {
         <span className="absolute text-3xl opacity-40 bottom-[48%] right-[4%] animate-float" style={{animationDuration:'4.8s'}}>📋</span>
       </div>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 animate-[fadeInUp_0.6s_ease-out_both]">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">My Quizzes</h1>
             <p className="text-gray-500 text-sm mt-1">{quizzes.length} quiz{quizzes.length !== 1 ? 'zes' : ''}</p>
@@ -91,8 +91,8 @@ const TeacherQuizList: React.FC = () => {
 
         {!isLoading && quizzes.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {quizzes.map((quiz) => (
-              <div key={quiz._id} className="bg-white border border-gray-200 rounded-lg p-5 flex flex-col justify-between hover:shadow-sm transition-shadow">
+            {quizzes.map((quiz, i) => (
+              <div key={quiz._id} className="bg-white border border-gray-200 rounded-lg p-5 flex flex-col justify-between hover:shadow-sm transition-shadow animate-[fadeInUp_0.5s_ease-out_both]" style={{ animationDelay: `${i * 80}ms` }}>
                 <div>
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="font-semibold text-gray-900 leading-tight flex-1 mr-2">{quiz.title}</h3>
