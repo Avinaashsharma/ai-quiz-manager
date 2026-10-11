@@ -74,15 +74,15 @@ const StudentDashboard: React.FC = () => {
       </div>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-1 relative z-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+          <div className="min-w-0">
             <h1 className="flex items-baseline gap-1.5 flex-wrap">
               <span className="text-lg font-medium text-gray-600">Welcome,</span>
               <span className="text-3xl font-bold text-orange-400">{user?.name}</span>
             </h1>
             <p className="text-gray-500 text-sm mt-1">Your quiz activity at a glance</p>
           </div>
-          <Link to="/student/join" className="px-3 py-1.5 sm:px-5 sm:py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-semibold transition-colors">
+          <Link to="/student/join" className="shrink-0 self-start sm:self-auto px-3 py-1.5 sm:px-5 sm:py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-semibold transition-colors">
             Join Quiz
           </Link>
         </div>

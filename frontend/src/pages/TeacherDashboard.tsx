@@ -115,7 +115,7 @@ const TeacherDashboard: React.FC = () => {
         {/* Quick Actions */}
         <div className="relative bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border-2 border-orange-200 rounded-2xl p-5 sm:p-8 text-center mb-8 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-orange-400 to-transparent rounded-full" />
-          <div className="text-3xl mb-2">🚀</div>
+          <div className="text-3xl mb-2 animate-float">🚀</div>
           <p className="text-gray-600 font-medium mb-1 text-sm sm:text-base">
             {quizzes.length === 0 ? 'Welcome! Create your first quiz to get started.' : 'Create a new quiz or manage existing ones.'}
           </p>
@@ -130,9 +130,10 @@ const TeacherDashboard: React.FC = () => {
             {quizzes.length > 0 && (
               <Link
                 to="/teacher/quizzes"
-                className="px-5 sm:px-6 py-2.5 bg-white hover:bg-orange-50 text-orange-600 border-2 border-orange-200 hover:border-orange-400 rounded-xl font-semibold transition-all duration-200 text-sm sm:text-base whitespace-nowrap"
+                className="px-4 sm:px-6 py-2.5 bg-white hover:bg-orange-50 text-orange-600 border-2 border-orange-200 hover:border-orange-400 rounded-xl font-semibold transition-all duration-200 text-sm sm:text-base whitespace-nowrap"
               >
-                View All Quizzes →
+                <span className="sm:hidden">All Quizzes →</span>
+                <span className="hidden sm:inline">View All Quizzes →</span>
               </Link>
             )}
           </div>

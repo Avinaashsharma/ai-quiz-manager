@@ -75,7 +75,7 @@ const pages: Record<string, { title: string; sections: { heading: string; body: 
     title: 'Contact',
     sections: [
       { heading: 'Get in Touch', body: 'Have questions, feedback, or need help? We\'d love to hear from you.' },
-      { heading: 'Email', body: 'support@aiquizmanager.com' },
+      { heading: 'Email', body: '73aveen@gmail.com'},
       { heading: 'Response Time', body: 'We aim to respond to all inquiries within 24–48 hours during business days.' },
       { heading: 'Bug Reports', body: 'Found a bug or something not working as expected? Please email us with a description of the issue, the page it occurred on, and any error messages you saw. Screenshots are always helpful!' },
     ],

@@ -43,7 +43,10 @@ const Home: React.FC = () => {
               Not Hours
             </h1>
             <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto mb-14">
-              Generate smart quizzes with AI, manage your classroom, and track student progress, all in one simple platform built for teachers and students.
+              Generate smart quizzes with AI, manage your classroom, and track student progress, all in one simple platform built for{' '}
+              <span className="font-extrabold text-lg sm:text-xl bg-gradient-to-r from-orange-500 to-amber-400 bg-clip-text text-transparent">teachers</span>
+              {' '}and{' '}
+              <span className="font-extrabold text-lg sm:text-xl bg-gradient-to-r from-violet-500 to-blue-500 bg-clip-text text-transparent">students</span>.
             </p>
             <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
               <Link
