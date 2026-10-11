@@ -103,7 +103,7 @@ const JoinQuiz: React.FC = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-56px)] flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-orange-50 px-4 relative overflow-hidden">
+    <div className="min-h-[calc(100vh-56px)] flex items-start justify-center bg-gradient-to-br from-orange-50 via-white to-orange-50 px-4 pt-8 sm:pt-16 relative overflow-hidden">
       {/* Scattered quiz-themed icons */}
       <div className="absolute inset-0 pointer-events-none select-none" aria-hidden="true">
         <span className="absolute text-3xl opacity-20 top-[8%] left-[10%] animate-float" style={{ animationDuration: '4s' }}>📚</span>

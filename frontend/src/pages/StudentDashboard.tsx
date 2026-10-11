@@ -82,7 +82,7 @@ const StudentDashboard: React.FC = () => {
             </h1>
             <p className="text-gray-500 text-sm mt-1">Your quiz activity at a glance</p>
           </div>
-          <Link to="/student/join" className="shrink-0 self-start sm:self-auto px-3 py-1.5 sm:px-5 sm:py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-semibold transition-colors">
+          <Link to="/student/join" className="btn-shine shrink-0 self-start sm:self-auto px-4 py-2 sm:px-6 sm:py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-sm font-semibold transition-colors">
             Join Quiz
           </Link>
         </div>
