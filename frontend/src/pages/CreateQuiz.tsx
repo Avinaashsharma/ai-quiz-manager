@@ -140,7 +140,7 @@ const CreateQuiz: React.FC = () => {
               />
             </div>
           </div>
-          <div className="relative flex justify-center mt-4 sm:mt-6">
+          <div className="relative flex justify-center mt-7 sm:mt-9">
             <button
               type="button"
               onClick={handleGenerate}
@@ -159,6 +159,17 @@ const CreateQuiz: React.FC = () => {
                 '✨ Generate Quiz'
               )}
             </button>
+          </div>
+
+          {/* Fallback Note on bottom-left - light compact responsive note */}
+          <div className="relative mt-8 sm:mt-16 flex items-start sm:items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs text-amber-900/80 bg-white/50 border border-amber-200/60 px-2 py-0.5 sm:px-2.5 rounded-md w-fit max-w-full">
+            <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-500 shrink-0 mt-0.5 sm:mt-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div className="text-[10px] sm:text-xs leading-tight sm:leading-normal">
+              <strong className="font-semibold text-amber-900 mr-1">Note:</strong>
+              In case AI fails to generate questions due to technical issues or quota limits, you will need to add questions manually below.
+            </div>
           </div>
         </div>
 
