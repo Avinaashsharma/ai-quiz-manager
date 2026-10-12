@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export interface QuestionData {
   question: string;
@@ -32,6 +32,8 @@ const emptyQuestion: QuestionData = {
 };
 
 const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, isSubmitting, submitLabel, error }) => {
+  const [dismissedError, setDismissedError] = useState('');
+  useEffect(() => { setDismissedError(''); }, [error]);
   const updateQuestion = (index: number, field: keyof QuestionData, value: string | number | string[]) => {
     setFormData((prev) => {
       const questions = [...prev.questions];
@@ -65,11 +67,26 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
   const inputCls = 'w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-orange-400 transition-all duration-200 text-sm';
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
-      {error && (
-        <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
-          <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          {error}
+    <form id="quiz-form" onSubmit={onSubmit} className="space-y-5">
+      {error && error !== dismissedError && (
+        <div className="fixed bottom-24 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 animate-[fadeInUp_0.3s_ease-out_both] max-w-[90vw] sm:max-w-md">
+          <div className="flex items-center gap-2.5 bg-white border border-red-200 text-red-700 px-4 py-3 rounded-2xl text-xs sm:text-sm shadow-xl shadow-red-200/30">
+            <span className="flex h-2 w-2 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            </span>
+            <span className="font-medium flex-1">{error}</span>
+            <button
+              type="button"
+              onClick={() => setDismissedError(error)}
+              className="text-red-400 hover:text-red-700 rounded-full p-0.5 hover:bg-red-100 transition-colors shrink-0"
+              aria-label="Dismiss error"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
       )}
 
@@ -115,17 +132,39 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Status</label>
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData((p) => ({ ...p, status: e.target.value }))}
-              className={inputCls}
-            >
-              <option value="draft">📝 Draft</option>
-              <option value="active">✅ Active</option>
-              <option value="closed">🔒 Closed</option>
-            </select>
+            <div className="flex gap-3 sm:gap-4">
+              {[
+                { value: 'draft',  label: 'Draft',  emoji: '📝', active: 'bg-gradient-to-b from-gray-400 to-gray-600 text-white border-gray-500 shadow-lg shadow-gray-200 scale-105', inactive: 'bg-white text-gray-600 border-2 border-gray-200 hover:border-gray-400' },
+                { value: 'active', label: 'Active', emoji: '✅', active: 'bg-gradient-to-b from-emerald-400 to-emerald-600 text-white border-emerald-500 shadow-lg shadow-emerald-200 scale-105', inactive: 'bg-white text-emerald-600 border-2 border-emerald-200 hover:border-emerald-400' },
+                { value: 'closed', label: 'Closed', emoji: '🔒', active: 'bg-gradient-to-b from-red-400 to-red-600 text-white border-red-500 shadow-lg shadow-red-200 scale-105', inactive: 'bg-white text-red-600 border-2 border-red-200 hover:border-red-400' },
+              ].map(s => (
+                <button key={s.value} type="button" onClick={() => setFormData((p) => ({ ...p, status: s.value }))}
+                  className={`relative flex-1 flex flex-col items-center justify-center gap-0.5 py-1.5 rounded-xl font-bold transition-all duration-200 cursor-pointer ${formData.status === s.value ? s.active : s.inactive}`}>
+                  {formData.status === s.value && (
+                    <span className="absolute top-1 right-1 w-4 h-4 bg-white/30 rounded-full flex items-center justify-center text-[10px]">✓</span>
+                  )}
+                  <span className="text-lg">{s.emoji}</span>
+                  <span className="text-xs font-bold">{s.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Sticky Submit — below Quiz Details */}
+      <div style={{ position: 'sticky', top: '60px', zIndex: 20 }} className="flex justify-end py-2">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-xl font-semibold text-sm transition-all duration-200 shadow-lg shadow-orange-300/40"
+        >
+          {isSubmitting ? (
+            <><svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4} /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" /></svg>Saving...</>
+          ) : (
+            <><svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>{submitLabel}</>
+          )}
+        </button>
       </div>
 
       {/* Questions */}

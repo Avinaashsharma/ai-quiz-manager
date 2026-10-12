@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../services/api';
 import axios from 'axios';
 import QuizForm, { type QuizFormData } from '../components/QuizForm';
@@ -74,11 +74,8 @@ const EditQuiz: React.FC = () => {
               <p className="text-xs text-gray-400 mt-0.5">Make changes and save when ready</p>
             </div>
           </div>
-          <Link to="/teacher/quizzes" className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-800 bg-white border border-gray-200 hover:border-gray-300 px-3 py-1.5 rounded-xl transition-all shadow-sm">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-            Back to Quizzes
-          </Link>
         </div>
+
         <QuizForm formData={formData} setFormData={setFormData} onSubmit={handleSubmit} isSubmitting={isSubmitting} submitLabel="Save Changes" error={error} />
       </div>
     </div>

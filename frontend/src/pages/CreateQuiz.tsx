@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import axios from 'axios';
 import QuizForm, { emptyQuestion, type QuizFormData } from '../components/QuizForm';
@@ -54,7 +54,7 @@ const CreateQuiz: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-56px)] relative overflow-hidden" style={{backgroundColor: '#ffffff', backgroundImage: 'radial-gradient(circle, #c0bfcf 1.5px, transparent 1.5px)', backgroundSize: '24px 24px'}}>
+    <div className="min-h-[calc(100vh-56px)] relative" style={{backgroundColor: '#ffffff', backgroundImage: 'radial-gradient(circle, #c0bfcf 1.5px, transparent 1.5px)', backgroundSize: '24px 24px'}}>
       {/* Colored tint overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/60 via-transparent to-teal-50/60 pointer-events-none" />
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
@@ -68,11 +68,8 @@ const CreateQuiz: React.FC = () => {
               <p className="text-xs text-gray-400 mt-0.5">Build manually or generate with AI</p>
             </div>
           </div>
-          <Link to="/teacher/quizzes" className="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-800 bg-white border border-gray-200 hover:border-gray-300 px-3 py-1.5 rounded-xl transition-all shadow-sm">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-            Back to Quizzes
-          </Link>
         </div>
+
 
         {/* AI Generation Panel */}
         <div className="relative bg-gradient-to-br from-teal-100 via-cyan-100 to-blue-100 border border-teal-200 rounded-2xl p-6 sm:py-10 mb-6 shadow-sm overflow-hidden">
@@ -100,7 +97,25 @@ const CreateQuiz: React.FC = () => {
           <p className="relative text-teal-700 text-sm mb-5">Let Gemini AI create quiz questions for you. You can edit them before saving.</p>
 
           {aiError && (
-            <div className="relative bg-red-100/90 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-4 text-sm text-center">{aiError}</div>
+            <div className="relative mb-5 flex justify-center animate-[fadeInUp_0.25s_ease-out_both]">
+              <div className="inline-flex items-center gap-2 sm:gap-2.5 bg-white/95 backdrop-blur-md border border-rose-200 text-rose-700 px-4 py-2 rounded-full shadow-md shadow-rose-200/40 text-xs sm:text-sm max-w-full">
+                <span className="flex h-2 w-2 relative shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+                </span>
+                <span className="font-semibold text-rose-800">{aiError}</span>
+                <button
+                  type="button"
+                  onClick={() => setAiError('')}
+                  className="ml-1 text-rose-400 hover:text-rose-700 rounded-full p-0.5 hover:bg-rose-100 transition-colors shrink-0"
+                  aria-label="Dismiss error"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           )}
 
           <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -140,12 +155,12 @@ const CreateQuiz: React.FC = () => {
               />
             </div>
           </div>
-          <div className="relative flex justify-center mt-7 sm:mt-9">
+          <div className="relative flex justify-center mt-4 sm:mt-10">
             <button
               type="button"
               onClick={handleGenerate}
               disabled={isGenerating}
-              className="w-full sm:w-auto min-w-[240px] sm:min-w-[280px] px-8 py-2.5 bg-white hover:bg-violet-50 disabled:bg-white/50 disabled:cursor-not-allowed text-violet-600 font-bold rounded-xl transition-all duration-200 text-sm sm:text-base inline-flex items-center justify-center gap-2 shadow-lg shadow-violet-900/30"
+              className="w-full sm:w-auto min-w-[240px] sm:min-w-[420px] px-8 sm:px-16 py-2.5 bg-white hover:bg-violet-50 disabled:bg-white/50 disabled:cursor-not-allowed text-violet-600 font-bold rounded-xl transition-all duration-200 text-sm sm:text-base inline-flex items-center justify-center gap-2 shadow-lg shadow-violet-900/30"
             >
               {isGenerating ? (
                 <>
