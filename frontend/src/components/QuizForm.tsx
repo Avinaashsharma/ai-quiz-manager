@@ -90,6 +90,21 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
         </div>
       )}
 
+      {/* Sticky Submit — above Quiz Details */}
+      <div style={{ position: 'sticky', top: '60px', zIndex: 20 }} className="flex justify-end py-2">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-xl font-semibold text-sm transition-all duration-200 shadow-lg shadow-orange-300/40"
+        >
+          {isSubmitting ? (
+            <><svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4} /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" /></svg>Saving...</>
+          ) : (
+            <><svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>{submitLabel}</>
+          )}
+        </button>
+      </div>
+
       {/* Quiz Details Card */}
       <div className="bg-white border border-indigo-100 rounded-2xl shadow-sm overflow-hidden">
         <div className="flex items-center gap-2.5 px-5 py-3.5 border-b border-indigo-100 bg-gradient-to-r from-indigo-200 to-purple-200">
@@ -152,20 +167,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ formData, setFormData, onSubmit, is
         </div>
       </div>
 
-      {/* Sticky Submit — below Quiz Details */}
-      <div style={{ position: 'sticky', top: '60px', zIndex: 20 }} className="flex justify-end py-2">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 disabled:cursor-not-allowed text-white rounded-xl font-semibold text-sm transition-all duration-200 shadow-lg shadow-orange-300/40"
-        >
-          {isSubmitting ? (
-            <><svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4} /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" /></svg>Saving...</>
-          ) : (
-            <><svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>{submitLabel}</>
-          )}
-        </button>
-      </div>
+
 
       {/* Questions */}
       <div className="space-y-4">
